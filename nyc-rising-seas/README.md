@@ -9,13 +9,16 @@ To see the final application, go here,
 
 ## Data sources
 
-NYC elevation data
-url:http://gis.nyc.gov/doitt/dl/gisdata/shp/ELEVATION.zip
+#####NYC elevation data
 
-2000 NYC Census blocks
-url:http://www.nyc.gov/html/dcp/download/biggapps/DCP_nycb2000av_001.zip
+  - http://gis.nyc.gov/doitt/dl/gisdata/shp/ELEVATION.zip
+
+#####2000 NYC Census blocks
+
+  - http://www.nyc.gov/html/dcp/download/biggapps/DCP_nycb2000av_001.zip
 
 ## Tutorial slides
+
 
 
 ####Info
