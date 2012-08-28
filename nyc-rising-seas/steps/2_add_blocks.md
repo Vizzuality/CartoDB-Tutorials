@@ -2,23 +2,32 @@ Include a CartoDB layer
 == 
 
 ##Below is the function you'll need to see this live
+    
+    var username = "viz2"; //change this to your username
+    var table_name = "nycb2000" // the name of our census blocks table
 
-    function initialize() {
-      // starting latitude and longitude for our map
-      var position = new L.LatLng(36.204824, 138.252924);
-      
-      // starting zoom
-      var zoom = 14; 
+    // Create an object for our new layer
+    var nyc_elevation = new L.CartoDBLayer({
+      map: map,
+      user_name: username,
+      table_name: table_name,
+      // the SQL query you will use to refine data (we will need this later)
+      query: "SELECT * FROM {{table_name}}",
+      // you can use tile_style to override any style you have stored on CartoDB
+      // but here we are going to use the choropleth we made before
+      //tile_style: "#{{table_name}}{polygon-fill:#E25B5B}",
+      // the below functions will be used later for mouse events
+      featureOver: function(){},
+      featureOut: function(){},
+      featureClick: function(){},
+      // what we want for our our infowindows
+      interactivity: "cartodb_id, boroname, elevation",
+      auto_bound: false, // don't change the location of the map to show the data
+      debug: true // shows errors in the dev console
+    });
 
-      // is our Leaflet map object
-      var map = new L.Map('map').setView(position, zoom)
-        , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-u6vat89l/{z}/{x}/{y}.png' // the url pattern for our basemap, many options available
-        , basemap = new L.TileLayer(mapboxUrl, {
-        	maxZoom: 18, 
-        	attribution: "Powered by Leaflet and Mapbox"
-        	});
-      map.addLayer(basemap,true);
-    }
+    // Adding layer to map
+    map.addLayer(nyc_elevation);
 
 ##See it here
 

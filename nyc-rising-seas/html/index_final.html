@@ -45,6 +45,32 @@
           attribution: "CartoDB Tutorials"
           });
       map.addLayer(basemap,true);
+
+      var username = "viz2"; //change this to your username
+      var table_name = "nycb2000" // the name of our census blocks table
+
+      // Create an object for our new layer
+      var nyc_elevation = new L.CartoDBLayer({
+        map: map,
+        user_name: username,
+        table_name: table_name,
+        // the SQL query you will use to refine data (we will need this later)
+        query: "SELECT * FROM {{table_name}}",
+        // you can use tile_style to override any style you have stored on CartoDB
+        // but here we are going to use the choropleth we made before
+        //tile_style: "#{{table_name}}{polygon-fill:#E25B5B}",
+        // what we want for our our infowindows
+        interactivity: "cartodb_id, boroname, elevation",
+        // the below functions will be used later for mouse events
+        featureOver: function(){},
+        featureOut: function(){},
+        featureClick: function(){},
+        auto_bound: false, // don't change the location of the map to show the data
+        debug: true // shows errors in the dev console
+      });
+
+      // Adding layer to map
+      map.addLayer(nyc_elevation);
     }
   </script>
 </head>
