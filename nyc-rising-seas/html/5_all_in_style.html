@@ -16,7 +16,6 @@
   <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
   <script type="text/javascript" src="js/libs/wax.leaf.min-7.0.0dev1-touched.js"></script>
   <script type="text/javascript" src="js/libs/cartodb-leaflet-min.js"></script>
-  <script type="text/javascript" src="js/libs/cartodb-popup-min.js"></script>
     
   <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
   
@@ -41,8 +40,6 @@
       // starting zoom
       var zoom = 13; 
 
-      var popup = new L.CartoDBPopup();
-
       // is our Leaflet map object
       var map = new L.Map('map').setView(position, zoom)
         , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-u6vat89l/{z}/{x}/{y}.png' // the url pattern for our basemap, many options available
@@ -54,7 +51,7 @@
 
       var username = "viz2"; //change this to your username
       var table_name = "nycb2000" // the name of our census blocks table
-      
+
       // Create an object for our new layer
       nyc_elevation = new L.CartoDBLayer({
         map: map,
@@ -68,32 +65,9 @@
         // what we want for our our infowindows
         interactivity: "cartodb_id, boroname, elevation",
         // the below functions will be used later for mouse events
-        featureOver: function(ev,latlng,pos,data) {
-          document.body.style.cursor = "pointer";
-        },
-        featureOut: function() {
-          document.body.style.cursor = "default";
-        },
-        featureClick: function(ev,latlng,pos,data) {
-          console.log('hi')
-          if (typeof( window.event ) != "undefined" ) {
-            // IE
-            ev.cancelBubble=true;
-          } else {
-            // Rest
-            ev.preventDefault();
-            ev.stopPropagation();
-          }
-          
-          // Set popup content
-          popup.setContent(data);
-
-          // Set latlng
-          popup.setLatLng(latlng);
-
-          // Show it!
-          map.openPopup(popup);
-        },
+        featureOver: function(){},
+        featureOut: function(){},
+        featureClick: function(){},
         auto_bound: false, // don't change the location of the map to show the data
         debug: true // shows errors in the dev console
       });
