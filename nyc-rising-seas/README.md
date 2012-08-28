@@ -18,3 +18,6 @@ url:http://www.nyc.gov/html/dcp/download/biggapps/DCP_nycb2000av_001.zip
 ## Tutorial slides
 
 
+####Info
+
+Tutorial given in August 2012 by @andrewxhill
