@@ -7,7 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="NYC Sea Level Rise">
   <meta name="author" content="Andrew W Hill / CartoDB">
-  
+
+  <link rel="stylesheet" href="css/leaflet.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
   <script type="text/javascript" src="js/libs/wax.leaf.min-7.0.0dev1-touched.js"></script>
@@ -30,17 +32,17 @@
     function initialize(){
       console.log('map running');
       // starting latitude and longitude for our map
-      var position = new L.LatLng(36.204824, 138.252924);
+      var position = new L.LatLng(40.723713744687274, -73.97566795349121);
       
       // starting zoom
-      var zoom = 14; 
+      var zoom = 13; 
 
       // is our Leaflet map object
       var map = new L.Map('map').setView(position, zoom)
         , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-u6vat89l/{z}/{x}/{y}.png' // the url pattern for our basemap, many options available
         , basemap = new L.TileLayer(mapboxUrl, {
-          maxZoom: 18, 
-          attribution: "Powered by Leaflet and Mapbox"
+          maxZoom: 20, 
+          attribution: "CartoDB Tutorials"
           });
       map.addLayer(basemap,true);
     }
