@@ -2,7 +2,7 @@ Setup a Leaflet map
 == 
 
 ##Change header to include map setup
-
+    var nyc_elevation;
     function initialize() {
       // starting latitude and longitude for our map
       var position = new L.LatLng(36.204824, 138.252924);

@@ -1,13 +1,13 @@
 Include a CartoDB layer
 == 
 
-##Below is the function you'll need to see this live
+##Below is the function you'll need to see this live. Put it inside you initialize function
     
     var username = "viz2"; //change this to your username
     var table_name = "nycb2000" // the name of our census blocks table
 
     // Create an object for our new layer
-    var nyc_elevation = new L.CartoDBLayer({
+    nyc_elevation = new L.CartoDBLayer({
       map: map,
       user_name: username,
       table_name: table_name,
