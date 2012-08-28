@@ -1,7 +1,7 @@
-Setup a Leaflet map
+Include a CartoDB layer
 == 
 
-##Change header to include map setup
+##Below is the function you'll need to see this live
 
     function initialize() {
       // starting latitude and longitude for our map
@@ -22,4 +22,4 @@ Setup a Leaflet map
 
 ##See it here
 
-http://vizzuality.github.com/CartoDB-Tutorials/nyc-rising-seas/html/1_setup_map.html
+http://vizzuality.github.com/CartoDB-Tutorials/nyc-rising-seas/html/2_add_blocks.html
