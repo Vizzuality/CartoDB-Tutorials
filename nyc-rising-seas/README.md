@@ -19,7 +19,7 @@ To see the final application, go here,
 
 ## Tutorial slides
 
-
+https://speakerdeck.com/u/andrewxhill/p/cartodb-application-building-tutorial
 
 ####Info
 
