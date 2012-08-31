@@ -65,7 +65,7 @@ You may notice in the last query that "MT" has no value in the sum column result
 
 You will very often want to JOIN data from two tables. In this case, we want to know the county outline stored in our usa_counties table and the count of youth in our youth_jailed table.
 
-1. Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
+Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
 
     SELECT 
       name,count(*) 
