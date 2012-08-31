@@ -48,6 +48,7 @@ To see the final application, go here,
 3. For me, the column is called "__of_juvenile_inmates_reported_in_most_recent_survey" and I don't want to ever type that again, so I'll change the name. Double click the name of your column, in the input field type the new name, "total".
 4. Below our column now named "total" click the text that says "string" and change the column type to "number".
 5. Finally, we will want to join our two tables based on their geometry. However, our youth_jailed table failed to automatically detect the latitude and longitude columns. Click the "georeference" button at the top right. For a longitude column select "longitude_generated" and for a latitude column select "latitude_generated" then click "Georeference".
+6. BE SURE that the tables you plan on building into applications are "Public" tables in your CartoDB account, if they are not, change them.
 
 ###Basic SQL
 
@@ -198,5 +199,43 @@ Is where your basemap is being defined. This is a basemap we use a lot for examp
     http:{s}.tiles.mapbox.com/v3/mapbox.world-black/{z}/{x}/{y}.png
 
 There are many more.
+
+![basemap defined](http://i.imgur.com/03mZx.png)
+
+###Add CartoDB layer
+
+Now, we are going to add a basic CartoDB layer. This layer is added using the CartoDB Leaflet libray, be sure to check the documentation ([available here](https://github.com/Vizzuality/cartodb-leaflet)) for more on that library. 
+
+Directly below the line,
+
+    map.addLayer(basemap,true);
+
+Add the following,
+
+      user_name: "viz2"; //change this to your username
+      table_name: "usa_counties"
+      var cartodb_leaflet = new L.CartoDBLayer({
+        map: map,
+        user_name:'viz2',
+        table_name: 'usa_counties',
+        query: "SELECT * FROM {{table_name}}",
+        //tile_style: "#{{table_name}}{polygon-fill:red}",
+        interactivity: "cartodb_id",
+        featureClick: function(ev, latlng, pos, data) {alert(data)},
+        featureOver: function(){},
+        featureOut: function(){},
+        attribution: "CartoDB",
+        auto_bound: false
+      });
+      
+      map.addLayer(cartodb_leaflet);
+
+Now, just change it to point at your account by changing this line,
+
+    user_name: "viz2";
+
+That is it, now you have your basic Leaflet Map driven off of CartoDB. If you put this file in your Dropbox Public folder, or share it over email, other people will be able to open it and view what you have made.
+
+
 
 Tutorial given in August 2012 by @andrewxhill

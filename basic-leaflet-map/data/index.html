@@ -49,6 +49,24 @@
           attribution: "CartoDB Tutorials"
           });
       map.addLayer(basemap,true);
+      user_name: "viz2"; //change this to your username
+      table_name: "usa_counties"
+      var cartodb_leaflet = new L.CartoDBLayer({
+        map: map,
+        user_name:'viz2',
+        table_name: 'usa_counties',
+        query: "SELECT * FROM {{table_name}}",
+        //tile_style: "#{{table_name}}{polygon-fill:red}",
+        interactivity: "cartodb_id",
+        featureClick: function(ev, latlng, pos, data) {alert(data)},
+        featureOver: function(){},
+        featureOut: function(){},
+        attribution: "CartoDB",
+        auto_bound: false
+      });
+      
+      map.addLayer(cartodb_leaflet);
+
     }
   </script>
 </head>
