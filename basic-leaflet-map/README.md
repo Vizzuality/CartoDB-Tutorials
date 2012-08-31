@@ -234,9 +234,7 @@ Now, just change it to point at your account by changing this line,
 
     user_name: "viz2";
 
-Your final map should look something like,
-
-[Final map](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/index.html)
+Your final map should look something like this, [final leaflet map](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/index.html)
 
 That is it, now you have your basic Leaflet Map driven off of CartoDB. If you put this file in your Dropbox Public folder, or share it over email, other people will be able to open it and view what you have made.
 
