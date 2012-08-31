@@ -21,7 +21,7 @@ To see the final application, go here,
 
   - http://public.tableausoftware.com/views/CountyandStateJail/Sheet3
 
-  - Export the data, http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/youth_by_county.csv.zip
+  - Export the data, [http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/youth_by_county.csv.zip](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/youth_by_county.csv.zip)
 
 ##Building the map
 
@@ -68,7 +68,6 @@ You will very often want to JOIN data from two tables. In this case, we want to 
 
 Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
 
-
     SELECT 
       name,count(*) 
     FROM 
@@ -88,8 +87,8 @@ Unlike the previous SQL statements we played with, you'll notice that this state
 Now, we want to use the data stored in our youth_jailed table with the polygons we uploaded into usa_counties. We could do this on the fly from our HTML map actually using the SQL above, but for this tutorial, we are going to join them once and store the results directly in our usa_counties map.
 
 1. Go back to your usa_counties table. You are going to need someplace to store the value, so let's create a new column called "total_youth". To do so, click the down-arrow beside any column name. In the menu that appears, click "Add new column". From there, add a column called "total_youth" and set its type to "number". Hit Create.
-2. Now run an UPDATE SQL statement very similar to the JOIN statement we ran previously,
 
+Now run an UPDATE SQL statement very similar to the JOIN statement we ran previously,
 
     UPDATE 
       usa_counties as u
@@ -116,11 +115,88 @@ Just like you did before, change the style of your usa_counties table. Set it to
 
 ![new choropleth](http://i.imgur.com/e8NMw.png)
 
+To remove the gray, let's change the Carto style a bit. Click "Carto" at the bottom right of the map. In the window that appears, replace the text with the following,
+
+    #usa_counties {
+       line-color:#FFFFFF;
+       line-width:1;
+       line-opacity:0.57;
+       polygon-opacity:0.57;
+       polygon-fill:transparent;
+       [jailed_youth<=415] {
+           polygon-fill:#B10026
+       }
+       [jailed_youth<=19] {
+           polygon-fill:#E31A1C
+       }
+       [jailed_youth<=8] {
+          polygon-fill:#FC4E2A
+       }
+       [jailed_youth<=4] {
+          polygon-fill:#FD8D3C
+       }
+       [jailed_youth<=2] {
+          polygon-fill:#FEB24C
+       }
+       [jailed_youth=1] {
+          polygon-fill:#FED976
+       }
+    }
+
+This just cleans up the style a bit, and makes it so only colors are applied to polygons with jailed_youth>=1 and all others are set to "transparent". Now we have a good looking map. Lets create an HTML page to show it.
+
+###Getting started
+
+You can download the basic starting page from 
+
+[http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/index.html.zip](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/index.html.zip)
+
+Open the file in a text editor or other tool (DO NOT USE Microsoft Word, Google Docs, or other document editing software. Use something very basic, like Notepad at the very least or an HTML development tool).
+
+###Adding a Leaflet map
+
+Everything you need is there, now you will want to add a map to the page. I've broken this down into two parts, the first deals with getting your base map setup, the second details adding your CartoDB layer to the map. I am not going into adding Pop Up windows here, but can add it later if you need.
+
+###Adding a baselayer
+
+If you drag your index.html file to your webbrowser, it will render the page. You wont see a map yet, so lets add that. In your text editor, replace the line,
+
+    function initialize(){}
+
+with the following
 
 
+    function initialize(){
+      console.log('map running');
+      // starting latitude and longitude for our map
+      var position = new L.LatLng(40.723713744687274, -93.97566795349121);
+      
+      // starting zoom
+      var zoom = 4; 
 
+      // is our Leaflet map object
+      var map = new L.Map('map').setView(position, zoom)
+        , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png'
+        //, mapboxUrl = 'http://tile.stamen.com/toner/{z}/{x}/{y}.jpg'
+        , basemap = new L.TileLayer(mapboxUrl, {
+          maxZoom: 20, 
+          attribution: "CartoDB Tutorials"
+          });
+      map.addLayer(basemap,true);
+    }
 
+Save your file and refresh it in your browser. You should now see a basic map. The url pattern,
 
+    http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png
 
+Is where your basemap is being defined. This is a basemap we use a lot for examples at Vizzuality. But some other basemaps you could use here are,
+
+    http://tile.stamen.com/toner/{z}/{x}/{y}.jpg
+
+    http:{s}.tiles.mapbox.com/v3/examples.map-4l7djmvo/{z}/{x}/{y}.png
+
+    http:{s}.tiles.mapbox.com/v3/mapbox.world-black/{z}/{x}/{y}.png
+
+There are many more.
 
 Tutorial given in August 2012 by @andrewxhill

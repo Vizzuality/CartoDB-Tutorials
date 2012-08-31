@@ -11,18 +11,15 @@
   <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.css" />
 
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/cartodb-leaflet.css">
+  <link rel="stylesheet" href="http://vizzuality.github.com/cartodb-leaflet/css/cartodb-leaflet.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
 
-  <script type="text/javascript" src="js/libs/modestmaps.js"></script>
-  <script type="text/javascript" src="js/libs/wax.leaf.min-7.0.0dev1-touched.js"></script>
-  <script type="text/javascript" src="js/libs/cartodb-leaflet-min.js"></script>
-  <script type="text/javascript" src="js/libs/cartodb-popup-min.js"></script>
+  <script type="text/javascript" src="http://vizzuality.github.com/cartodb-leaflet/js/wax.leaf.min.js"></script>
+  <script type="text/javascript" src="http://vizzuality.github.com/cartodb-leaflet/dist/cartodb-leaflet-min.js"></script>
+  <script type="text/javascript" src="http://vizzuality.github.com/cartodb-leaflet/dist/cartodb-popup-min.js"></script>
 
-  
   <style type='text/css'>
     html, body {
       height: 100%;
@@ -34,25 +31,46 @@
       width: 100%;
     }
   </style>
-
   <script>
+    var nyc_elevation;
     function initialize(){
+      console.log('map running');
+      // starting latitude and longitude for our map
+      var position = new L.LatLng(40.723713744687274, -93.97566795349121);
+      
+      // starting zoom
+      var zoom = 4; 
 
-      var map;
+      // is our Leaflet map object
+      var map = new L.Map('map').setView(position, zoom)
+        , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/cartodb.map-1nh578vv/{z}/{x}/{y}.png'
+        //, mapboxUrl = 'http://tile.stamen.com/toner/{z}/{x}/{y}.jpg'
+        , basemap = new L.TileLayer(mapboxUrl, {
+          maxZoom: 20, 
+          attribution: "CartoDB Tutorials"
+          });
+      map.addLayer(basemap,true);
 
-      var counties = 'usa_counties'
-      var jailedxcounty = new MM.Layer(new MM.TemplatedMapProvider("https://viz2.cartodb.com/tiles/laws_by_state/{Z}/{X}/{Y}.png"));
-      //map.insertLayerAt(1, tweets);
-      map = new MM.Map(document.getElementById('map'), jailedxcounty);
 
-      var zoom = 5;
-      map.setCenterZoom(new MM.Location(40.00, -93.98), zoom);
-   
+var cartodb_leaflet = new L.CartoDBLayer({
+  map: map,
+  user_name:'viz2',
+  table_name: 'usa_counties',
+  query: "SELECT * FROM {{table_name}}",
+  //tile_style: "#{{table_name}}{polygon-fill:red}",
+  interactivity: "cartodb_id",
+  featureClick: function(ev, latlng, pos, data) {alert(data)},
+  featureOver: function(){},
+  featureOut: function(){},
+  attribution: "CartoDB",
+  auto_bound: false
+});
+
+map.addLayer(cartodb_leaflet);
+
 
     }
   </script>
-
-
 </head>
   <body onload="initialize()">
     <div id="map"></div>
