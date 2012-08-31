@@ -25,10 +25,10 @@
       width: 100%;
       background: black;
     }
-    #map{
-      height: 100%;
-      width: 100%;
-    }
+	  #map{
+	 	  height: 100%;
+		  width: 100%;
+	  }
   </style>
   <script>
     var nyc_elevation;
@@ -53,15 +53,15 @@
       var table_name = "nycb2000" // the name of our census blocks table
 
       // Create an object for our new layer
-      var nyc_elevation = new L.CartoDBLayer({
+      nyc_elevation = new L.CartoDBLayer({
         map: map,
         user_name: username,
         table_name: table_name,
         // the SQL query you will use to refine data (we will need this later)
-        query: "SELECT * FROM {{table_name}}",
+        query: "SELECT * FROM {{table_name}} WHERE 0 < elevation ",
         // you can use tile_style to override any style you have stored on CartoDB
         // but here we are going to use the choropleth we made before
-        tile_style: "#{{table_name}} {    line-color:#FFFFFF;    line-width:0;    line-opacity:0.72;    polygon-opacity:0.72; } [elevation<=988.01] {    polygon-fill:#B10026; } [elevation<=119.60518933] {    polygon-fill:#E31A1C; } [elevation<=89.42] {    polygon-fill:#FC4E2A; } [elevation<=70.30294809] {    polygon-fill:#FD8D3C; } [elevation<=54.07] {    polygon-fill:#FEB24C; } [elevation<=39.92] {    polygon-fill:#FED976; } [elevation<=24.56] {    polygon-fill:#FFFFB2; }  } ",
+        //tile_style: "#{{table_name}}{polygon-fill:#E25B5B}",
         // what we want for our our infowindows
         interactivity: "cartodb_id, boroname, elevation",
         // the below functions will be used later for mouse events
@@ -74,10 +74,23 @@
 
       // Adding layer to map
       map.addLayer(nyc_elevation);
+
+    }
+    // Add a function for our input slider
+    function seaLevelChange() {
+      // Change the query
+      var seaLevel = $("input.sealevel").val();
+      nyc_elevation.setQuery("SELECT * FROM {{table_name}} WHERE " + seaLevel + " < elevation ");
+      $(".feet").html(seaLevel);
     }
   </script>
 </head>
   <body onload="initialize()">
-    <div id="map"></div>
+		<div id="map"></div>
+    <form class="example">
+      <p class="small">Change the sea level</p>
+      <input type="range" class="sealevel" min="0" max="300" value="0" onmouseup="seaLevelChange()"/>
+      <p class="sea"><span class="feet">0</span> feet</p>
+    </form>
   </body>
 </html>

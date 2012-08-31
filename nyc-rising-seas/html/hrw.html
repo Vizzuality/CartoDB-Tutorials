@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>NYC Sea Level Rise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NYC Sea Level Rise">
+  <meta name="author" content="Andrew W Hill / CartoDB">
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/cartodb-leaflet.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.3.1/leaflet.js"></script>
+  <script type="text/javascript" src="js/libs/wax.leaf.min-7.0.0dev1-touched.js"></script>
+  <script type="text/javascript" src="js/libs/cartodb-leaflet-min.js"></script>
+  <script type="text/javascript" src="js/libs/cartodb-popup-min.js"></script>
+    
+  <link rel="stylesheet" type="text/css" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+  
+  <style type='text/css'>
+    html, body {
+      height: 100%;
+      width: 100%;
+      background: black;
+    }
+    #map{
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+  <script>
+    var nyc_elevation;
+    function initialize(){
+      console.log('map running');
+      // starting latitude and longitude for our map
+      var position = new L.LatLng(40.723713744687274, -93.97566795349121);
+      
+      // starting zoom
+      var zoom = 4; 
+
+      // is our Leaflet map object
+      var map = new L.Map('map').setView(position, zoom)
+        , mapboxUrl = 'http://tile.stamen.com/toner/{z}/{x}/{y}.jpg' // the url pattern for our basemap, many options available
+        , basemap = new L.TileLayer(mapboxUrl, {
+          maxZoom: 20, 
+          attribution: "CartoDB Tutorials"
+          });
+      map.addLayer(basemap,true);
+
+
+var cartodb_leaflet = new L.CartoDBLayer({
+  map: map,
+  user_name:'viz2',
+  table_name: 'usa_counties_andrew',
+  query: "SELECT * FROM {{table_name}}",
+  //tile_style: "#{{table_name}}{polygon-fill:red}",
+  interactivity: "cartodb_id, magnitude",
+  featureClick: function(ev, latlng, pos, data) {alert(data)},
+  featureOver: function(){},
+  featureOut: function(){},
+  attribution: "CartoDB",
+  auto_bound: false
+});
+
+map.addLayer(cartodb_leaflet);
+
+
+
+      // var username = "viz2"; //change this to your username
+      // var table_name = "usa_counties_andrew" // the name of our census blocks table
+
+      // // Create an object for our new layer
+      // var nyc_elevation = new L.CartoDBLayer({
+      //   map: map,
+      //   user_name: username,
+      //   table_name: table_name,
+      //   // the SQL query you will use to refine data (we will need this later)
+      //   query: "SELECT * FROM {{table_name}} where 0<jailed_youth",
+      //   // you can use tile_style to override any style you have stored on CartoDB
+      //   // but here we are going to use the choropleth we made before
+      //   tile_style: "#{{table_name}} {    line-color:#FFFFFF;    line-width:0;    line-opacity:0.57;    polygon-opacity:0.57;    polygon-fill:transparent;    [jailed_youth<=415] {    polygon-fill:#B10026 }   [jailed_youth<=19] {    polygon-fill:#E31A1C }   [jailed_youth<=8] {    polygon-fill:#FC4E2A }   [jailed_youth<=4] {    polygon-fill:#FD8D3C }   [jailed_youth<=2] {    polygon-fill:#FEB24C }   [jailed_youth<=1] {    polygon-fill:#FED976 } }",
+      //   // what we want for our our infowindows
+      //   interactivity: "cartodb_id, boroname, elevation",
+      //   // the below functions will be used later for mouse events
+      //   featureOver: function(){},
+      //   featureOut: function(){},
+      //   featureClick: function(){},
+      //   auto_bound: false, // don't change the location of the map to show the data
+      //   debug: true // shows errors in the dev console
+      // });
+
+      // // Adding layer to map
+      // map.addLayer(nyc_elevation);
+
+    }
+  </script>
+</head>
+  <body onload="initialize()">
+    <div id="map"></div>
+  </body>
+</html>

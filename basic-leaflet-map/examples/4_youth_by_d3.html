@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>U.S. States</title>
+    <script type="text/javascript" src="js/libs/d3/d3.min.js"></script>
+    <script type="text/javascript" src="js/libs/d3/d3.geo.min.js"></script>
+    <script type="text/javascript" src="js/libs/d3/d3.geom.min.js"></script>
+    <style type="text/css">
+
+svg {
+  width: 2060px;
+  height: 5000px;
+}
+
+body{
+    background:#111;
+}
+
+#states path {
+  fill-opacity:0;
+  stroke: #ddd;
+  stroke-width:1px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+// The radius scale for the centroids.
+var r = d3.scale.sqrt()
+    .domain([0, 1e6])
+    .range([0, 10]);
+
+// Our projection.
+var xy = d3.geo.albersUsa();
+
+var svg = d3.select("body")
+        .append("svg")
+        .call(d3.behavior.zoom()
+            .on("zoom", redraw))
+        .append("g");
+
+svg.append("g").attr("id", "counties");
+svg.append("g").attr("id", "states");
+
+var path = d3.geo.path();
+
+var fill = d3.scale.log()
+    .domain([0,0.09,0.17,0.33,0.65,1.3,2.6])
+    .range(["#fff","#fde6f6", "#fbd7f1", "#fbd7f1", "#f7a8e1", "#f279d0", "#e015a7"]);
+//"#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"
+d3.json("https://viz2.cartodb.com/api/v2/sql/?q=SELECT%20*%20FROM%20state_borders%20WHERE%20the_geom%20IS%20NOT%20NULL&format=geojson&dp=4", function(collection) {
+  svg.select("#states")
+    .selectAll("path")
+      .data(collection.features)
+    .enter().append("path")
+    .attr("d", path.projection(xy));
+
+    d3.json("https://viz2.cartodb.com/api/v2/sql/?q=SELECT%20the_geom,jailed_youth%20FROM%20us_counties%20WHERE%200<jailed_youth%20AND%20the_geom%20IS%20NOT%20NULL&format=geojson&dp=4", function(collection) {
+    svg.select("#counties")
+        .selectAll("path")
+        .data(collection.features)
+        .enter().append("path")
+        .attr("d", path.projection(xy))
+        .attr("fill", function(d) { return fill(d.properties.jailed_youth); });
+    });
+});
+
+
+function redraw() {
+  svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
+
+    </script>
+  </body>
+</html>
