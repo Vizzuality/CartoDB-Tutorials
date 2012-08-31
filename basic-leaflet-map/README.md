@@ -1,4 +1,4 @@
-Building a basic Leaflet map using CartoDB
+Building a basic Leaflet map using [CartoDB](http://cartodb.com)
 == 
 
 This tutorial will walk you through a set of basic steps to build an leaflet map using CartoDB. 
@@ -36,7 +36,10 @@ To see the final application, go here,
 1. In your "Map" tab, click the dropdown button beside "Visualization Type".
 2. Click the "Numeric Choropleth" radio button
 3. For column, choose "area"
-4. Select any variation for the rest of the style options
+4. Select any variation for the rest of the style options.
+5. You should now have something similar to,
+
+![basic CartoDB choropleth](http://i.imgur.com/l3L29.png)
 
 
 
