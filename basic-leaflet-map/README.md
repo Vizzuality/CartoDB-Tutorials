@@ -55,6 +55,7 @@ Play around with some of the following SQL statements
 
     SELECT sum(total) FROM youth_jailed
 
+
     SELECT state,sum(total) FROM youth_jailed GROUP BY state
 
 You may notice in the last query that "MT" has no value in the sum column result. This is because no value existed in the input table. If you want to remove the row, you can do it manually or as follows,
@@ -65,7 +66,8 @@ You may notice in the last query that "MT" has no value in the sum column result
 
 You will very often want to JOIN data from two tables. In this case, we want to know the county outline stored in our usa_counties table and the count of youth in our youth_jailed table.
 
-Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
+1. Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
+
 
     SELECT 
       name,count(*) 
@@ -87,6 +89,7 @@ Now, we want to use the data stored in our youth_jailed table with the polygons 
 
 1. Go back to your usa_counties table. You are going to need someplace to store the value, so let's create a new column called "total_youth". To do so, click the down-arrow beside any column name. In the menu that appears, click "Add new column". From there, add a column called "total_youth" and set its type to "number". Hit Create.
 2. Now run an UPDATE SQL statement very similar to the JOIN statement we ran previously,
+
 
     UPDATE 
       usa_counties as u
