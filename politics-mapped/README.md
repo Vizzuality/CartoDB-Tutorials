@@ -83,19 +83,19 @@ I've selected a diverging ramp of 5 colors. From red to blue, #CA0020, #F4A582, 
 
 ##### Manually Editing CartoCSS
 
-  - Click the 'Carto' button in the lower left of your map
+Click the 'Carto' button in the lower left of your map
 
 ![carto editor](http://i.imgur.com/L9cuA.png)
 
-  - This takes you to your editor, notice the Undo/Redo buttons in the lower left. Feel free to play around. I'm going to just paste in my 5 new colors to start.
+This takes you to your editor, notice the Undo/Redo buttons in the lower left. Feel free to play around. I'm going to just paste in my 5 new colors to start.
 
 ![new color ramp](http://i.imgur.com/vBYgP.png)
   
-  - This is still wrong, we have incorrect bins. Now, lets edit the bins to be <=1, <0.8, <0.6, <0.4, <0.2 (most red)
+This is still wrong, we have incorrect bins. Now, lets edit the bins to be <=1, <0.8, <0.6, <0.4, <0.2 (most red)
 
 ![linear color ramp](http://i.imgur.com/8nZLf.png)
 
-  - still don't love it, we could either add more bins and greater level of intermediate levels, or we can condense our ramp toward the middle. Here I do that and make the white more gray
+still don't love it, we could either add more bins and greater level of intermediate levels, or we can condense our ramp toward the middle. Here I do that and make the white more gray
 
 ![modified color ramp](http://i.imgur.com/145p9.png)
 
@@ -139,15 +139,23 @@ Behind the scenes this UI based option is just running SQL. You can run the simi
 
   - Enter the following
 
-    SELECT * FROM ny_final ORDER BY vap DESC
+      SELECT * FROM ny_final ORDER BY vap DESC
 
   - Press 'apply query'
 
-Take note now that the '*' roughly means all, so you are asking for all columns that come with your result. Alternatively, if you would like to see just the ordered column, run the following,
+Take note now that the * roughly means all, so you are asking for all columns that come with your result. Alternatively, if you would like to see just the ordered column, run the following,
 
     SELECT vap FROM ny_final ORDER BY vap DESC
 
+We can also run aggregate functions, say
 
+    SELECT AVG(vap) FROM ny_final
+
+Or a more complex query, let's select all districts that have voting populations greater than the average
+
+    SELECT * FROM ny_final WHERE vap > (SELECT AVG(vap) FROM ny_final)
+
+If you now take a look at the map you can see the distribution of voting across some of the more populated districts. This is just the tip of the iceberg!
 
 #### Modifying data
 
@@ -159,12 +167,124 @@ Now we are going to go through doing a geospatial intersection and manipulation.
 
 ##### Performing a geospatial join
 
-  Before you run any updates on geometry, you can always backup your table by Duplicating it or downloading it. If tables are not too large, you can also perform a modification 'live' and view the results without writing them back to the database.
+First, let's take a look at the usa_admin Map tab. All the states in boring colors, no problem. This is a modified admin view made for a specific map, with Alaska and Hawaii out of place, this will be fine for our purposes.
 
-    - 
+![usa admin](http://i.imgur.com/ULdhH.png)
+
+Now, run the following query,
+
+    SELECT * FROM usa_admin WHERE name_1 = 'New York'
+
+Now we know how to isolate the New York border, so let's go back to our ny_final table.
+
+Before you run any updates on geometry, you can always backup your table by Duplicating it or downloading it. If tables are not too large, you can also perform a modification 'live' and view the results without writing them back to the database. For now, try the following,
+
+    UPDATE ny_final as nyf SET the_geom = (SELECT ST_Multi(ST_Buffer(ST_Intersection(usa_admin.the_geom,nyf.the_geom),0)) FROM usa_admin WHERE name_1 = 'New York') FROM usa_admin WHERE name_1 = 'New York' AND ST_Contains(usa_admin.the_geom_webmercator,nyf.the_geom_webmercator) IS FALSE
+
+  - Subqueries
+
+  - the_geom versus the_geom_webmercator
+
+  - ST_Buffer
+
+  - ST_Intersection
+
+  - ST_Multi
+
+  - ST_Contains
+
+Now, clear the view, or refresh the page. Go to your Map tab and take a look. Nicely cleaned up!
+
+![cleaned up borders](http://i.imgur.com/vug8s.png)
+
+To share this map, you now need to make it public. Click 'Private' and toggle the table to Public. Then click, 'Share this map' and you will have a URL that is tweet or email worthy. Just remember, that URL points directly to the Map of the data, so updates, restyling, deletion, or removal will immediately be reflected in the URL to anyone who next opens it.
+
+#### Creating a Leaflet Map from data
+
+Now we are going to go through the steps of creating a simple map with the Leaflet library. Use the map.html file as a starting point.
 
 
+    var user_name = "viz2"; //change this to your username
+    var table_name = "ny_final";
+    var cartodb_leaflet = new L.CartoDBLayer({
+      map: map,
+      user_name: user_name,
+      table_name: table_name,
+      query: "SELECT * FROM {{table_name}}",
+      interactivity: "cartodb_id",
+      featureClick: function(ev, latlng, pos, data) {console.log(data)},
+      featureOver: function(){},
+      featureOut: function(){},
+      attribution: "CartoDB",
+      auto_bound: false
+    });
+    map.addLayer(cartodb_leaflet);
+
+Next, we can add a parameter to override the style,
+
+    tile_style: "#{{table_name}}{polygon-fill:red; line-color: #ff0077; }",
+
+Adding text
+
+    #{{table_name}}::text_style {
+       text-face-name:"DejaVu Sans Book";
+       text-name:"[name10]"; //lame name, I know!
+       text-fill:#FFF;
+       text-halo-fill:rgba(0,0,0,0.5);
+       text-halo-radius:1;
+       text-size:11;
+       text-allow-overlap: false;
+       text-clip: false;
+       text-label-position-tolerance: 10;
+       text-min-distance: 10;
+       text-vertical-alignment: bottom;
+       line-color:#FFFFFF;
+       line-width:0;
+       line-opacity:0.7;
+    }
+
+Now try removing the baselayer entirely for a full black with only counties mapped.
+
+Modify our CartoDB object to add some interactivity,
+
+    interactivity: "cartodb_id, pop100, namelsad10",
+    featureClick: function() {},
+    featureOver: function(ev,latlng,pos,data) {
+      document.body.style.cursor = "pointer";
+      showTooltip(data,pos)
+    },
+    featureOut: function() {
+      document.body.style.cursor = "default";
+      hideTooltip();
+    },
+
+And add supporting functions below the initialize function
+
+    function showTooltip(data,point) {
+      var html = "";
+      
+      var name = (data["namelsad10"]!="")?data["namelsad10"]:"Unknown";
+      
+      
+      html += "<br><label>" + name +"</label>";
+      html += "<br><label>Pop." + data["pop100"] +"</label></p>";
+      
+      $("#tooltip").html(html);
+      $("#tooltip").css({left: (point.x + 15) + 'px', top: point.y - ($("#tooltip").height()) + 10 + 'px'})
+      $("#tooltip").show();
+    }
+
+    function hideTooltip() {
+      $("#tooltip").hide();
+    }
+
+Finally, add our div element,
 
 
+    <div class="alert alert-info" id="tooltip">
+      <p>Tooltip</p>
+    </div>    
+
+![Leaflet map](http://i.imgur.com/NKINE.png)
 
 Tutorial given in September 2012 by @andrewxhill
