@@ -1,4 +1,4 @@
-New York Policital data using [CartoDB](http://cartodb.com)
+Mapping Policital data using [CartoDB](http://cartodb.com)
 == 
 
 This tutorial will walk you through a set of basic steps to build basic to advanced maps using CartoDB
@@ -121,7 +121,50 @@ I've selected a diverging ramp of 5 colors. From red to blue, #CA0020, #F4A582, 
        polygon-fill:#CA0020
     }
 
+#### SQL queries
+
+Now, we will start using probably the most powerful feature of CartoDB, the ability to run SQL. SQL is everywhere, you can use it in the admin console, in embedded maps, in the Maps API, and obviously in the SQL API.
+
+  - Start by going to the Table tab of you ny_final table
+
+  - At the column 'vap' click the down button
+
+  - Click 'Order by DESC'
+
+  - Scroll back over to see the vap column now reordered
+
+Behind the scenes this UI based option is just running SQL. You can run the similar by,
+
+  - Click the button, 'SQL' in the lower right of your table.
+
+  - Enter the following
+
+    SELECT * FROM ny_final ORDER BY vap DESC
+
+  - Press 'apply query'
+
+Take note now that the '*' roughly means all, so you are asking for all columns that come with your result. Alternatively, if you would like to see just the ordered column, run the following,
+
+    SELECT vap FROM ny_final ORDER BY vap DESC
 
 
 
-Tutorial given in August 2012 by @andrewxhill
+#### Modifying data
+
+Now we are going to go through doing a geospatial intersection and manipulation. I don't particularly like the way so much water body area is included in the above map, so now I am going to show you how to crop the area down by a more refined NY State border file.
+
+  - Start by downloading a states boarder file, http://viz2.cartodb.com/tables/1738.shp
+
+  - Upload the file to your account, rename it usa_admin
+
+##### Performing a geospatial join
+
+  Before you run any updates on geometry, you can always backup your table by Duplicating it or downloading it. If tables are not too large, you can also perform a modification 'live' and view the results without writing them back to the database.
+
+    - 
+
+
+
+
+
+Tutorial given in September 2012 by @andrewxhill
