@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Example SQL - Earthquake topology</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="example">
+  <meta name="author" content="Andrew W Hill / CartoDB">
+
+  <link href="http://vizzuality.s3.amazonaws.com/hexagon/css/leaflet.css" rel="stylesheet" type="text/css" />
+  <link href="http://vizzuality.s3.amazonaws.com/hexagon/css/leaflet.ie.css" rel="stylesheet" type="text/css" />
+  <link  href="http://vizzuality.s3.amazonaws.com/hexagon/css/cartodb.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://vizzuality.s3.amazonaws.com/hexagon/js/leaflet.js"></script>
+  <script type="text/javascript" src="http://vizzuality.s3.amazonaws.com/hexagon/js/wax.leaflet.min.js"></script>
+  <script type="text/javascript" src="http://vizzuality.s3.amazonaws.com/hexagon/js/cartodb-leaflet.js"></script>
+
+  <style type='text/css'>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background: black;
+    }
+    #map{
+      height: 100%;
+      width: 100%;
+      background: black;
+    }
+    #tooltip {
+      position:absolute;
+      right: 100px;
+      width:140px;
+      height:auto;
+      padding:10px;
+      z-index:1000;
+      display:none;
+      background:white;
+      border-color:#DDDDDD!important;
+      font:normal 12px Arial!important;
+      color:#666666!important;
+    }
+    #tooltip label {font-weight:bold; width: 100%;}
+  </style>
+  <script>
+    var hexagons;
+    function initialize(){
+      // starting latitude and longitude for our map
+      var position = new L.LatLng(40.67, -113.98);
+      
+      // starting zoom
+      var zoom = 3; 
+
+      // is our Leaflet map object
+      var map = new L.Map('map', {maxZoom: 5, minZoom: 2, zoomControl: true}).setView(position, zoom)
+        , mapboxUrl = 'http://{s}.tiles.mapbox.com/v3/mapbox.mapbox-light/{z}/{x}/{y}.png64'
+        , basemap = new L.TileLayer(mapboxUrl, {
+          maxZoom: 20, 
+          attribution: "CartoDB"
+          });
+      map.addLayer(basemap,true);
+            
+            
+    
+    var style="#coverage_oldweather_new_style{[prop_count>0]{polygon-fill:#415E9E;}[prop_count>2]{polygon-fill:#6581B5;}[prop_count>4]{polygon-fill:#88A3CC;}[prop_count>6]{polygon-fill:#ACC6E3;}[prop_count>8]{polygon-fill:#88A3CC;}[prop_count>10]{polygon-fill:#F6BEB5;}[prop_count>30]{polygon-fill:#E3928C;}[prop_count>50]{polygon-fill:#CF6562;}[prop_count>100]{polygon-fill:#BC3939;}polygon-opacity:0.71;line-opacity:0.41;line-color:#000000;line-width:0.8;}";
+    var query="WITH   setup AS (    SELECT ST_Simplify(ST_Transform(ST_Buffer(the_geom::geography,n*50000)::geometry,3857),5000) geom, (users*(10.0 - 1*n)/10.0) as users FROM zooips_users, generate_series(1,9) n  WHERE st_isvalid(ST_Transform(ST_Buffer(the_geom::geography,n*50000)::geometry,3857))   ),  maxusers AS (     SELECT max(users)::float as mostusers FROM setup  ), polys as (SELECT ST_SnapToGrid(ST_Buffer(ST_Buffer(ST_Union(geom),50000),-50000),2000,2000) the_geom_webmercator, round((users/mostusers)::numeric,1) users, 2 as layer FROM setup,maxusers GROUP BY round((users/mostusers)::numeric,1) ORDER BY round((users/mostusers)::numeric,1) DESC)  SELECT * from polys WHERE CDB_XYZ_Extent({x},{y},{z}) && the_geom_webmercator UNION ALL SELECT the_geom_webmercator, round((users/mostusers)::numeric,1) as users, 1 as layer FROM zooips_users, maxusers WHERE CDB_XYZ_Extent({x},{y},{z}) && the_geom_webmercator";
+    
+    hexagons = new L.CartoDBLayer({
+          map_canvas: 'map',
+          map: map,
+          cdn_url: "http://d2c5ry9dy1ewvi.cloudfront.net",
+          extra_params:{v:1},
+          user_name:"viz2",
+          table_name: 'zooips_users',
+          infowindow: false,
+          //tile_style:style,
+          query: query,
+          interactivity: false,
+          auto_bound: false,
+          debug: false
+        });
+
+
+    }
+  </script>
+</head>
+  <body onload="initialize()">
+    <div id="map"></div>
+  </body>
+</html>
