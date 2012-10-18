@@ -66,7 +66,7 @@ Next you'll see that you still have a button to run SQL. What is new are the nex
 
 Now that you have your map just the way you want it, let's share it with some friends. To do that, make sure that your map is centered and at the zoom you want to share. Next, click the 'share' button above the top right of the map. From here you can get code to embed the map in a webpage, or a url to share that map via Twitter, Email, or elsewhere. People that open that link will not be able to edit your data, only see it. 
 
-## Removing unwanted rows
+## Bonus: Removing unwanted rows
 
 If you are ready to start digging into some SQL, try this. Scroll to the right through your table until you find the column titled 'crimsusp'. This column lists the crime that the person was suspected for when they were stopped. In our case, let's remove everything that isn't 'GRAFFITI'. The SQL would be like this,
 
