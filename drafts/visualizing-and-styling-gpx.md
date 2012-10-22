@@ -137,3 +137,4 @@ Be sure to make both kachemakbaysp and kachemakbaysp_copy public and you can now
 
 here is the example in V1.0
 https://viz2.cartodb.com/tables/kachemakbaysp_copy/embed_map?sql=%20%20%20%20%20SELECT%20cartodb_id%2Cthe_geom_webmercator%2Ctrack_fid%2C'first'%20as%20layer%20FROM%20kachemakbaysp_copy%0A%20%20%20%20%20UNION%20ALL%0A%20%20%20%20%20SELECT%20cartodb_id%2Cthe_geom_webmercator%2Ctrack_fid%2C'third'%20as%20layer%20FROM%20kachemakbaysp%20WHERE%20track_se_1%20%25%20120%20%3D%200%0A%20%20%20%20%20UNION%20ALL%0A%20%20%20%20%20SELECT%20cartodb_id%2Cthe_geom_webmercator%2Ctrack_fid%2C'second'%20as%20layer%20FROM%20kachemakbaysp%20WHERE%20track_se_1%20%3D%201
+
