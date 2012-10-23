@@ -34,13 +34,14 @@ Select them and create a new zip, call it something easy, Pumps.zip for example.
  - Cholera_Deaths.dbf
  - Cholera_Deaths.sbn
 
- Again, call it something simple, like Cholera.zip for example. Now, start by dragging our Pumps.zip file to your dashboard. You should end up with a table simply called, pumps. Next, go back to your dashboard by clicking the CartoDB logo at the upper left of the screen. Now, drag your Cholera.zip file to your dashboard. Great! You should now have a table called cholera_deaths. 
 
- ## Mapping the cholera outbreak
+Again, call it something simple, like Cholera.zip for example. Now, start by dragging our Pumps.zip file to your dashboard. You should end up with a table simply called, pumps. Next, go back to your dashboard by clicking the CartoDB logo at the upper left of the screen. Now, drag your Cholera.zip file to your dashboard. Great! You should now have a table called cholera_deaths. 
 
- You can start by looking through your new cholear_deaths table. You should see that we have a point geometry. Each point represents a household in 1854, Soho neighborhood of London. If you look at your map, they may not match the modern day streets exactly, but still pretty neat still! If you go back to your cholera_deaths Table view, you'll see also a column called 'count', this tells us how badly it hit each household. This will be the value we want to style our data on.
+## Mapping the cholera outbreak
 
- Head back to your Map view. To make this data communicate the intensity of cholera in each household, let's make a thematic map. Click the Style tool button on the right of the screen. Take a look at the out-of-the-box styles provided, if you mouse over them, you'll find one named, 'Bubbles', that's the one we'll use. Click it. Below that, change the Column drop down and select 'count'. The map should update right as you click it, pretty neat? It doesn't look the best it can though. Do each of the following,
+You can start by looking through your new cholear_deaths table. You should see that we have a point geometry. Each point represents a household in 1854, Soho neighborhood of London. If you look at your map, they may not match the modern day streets exactly, but still pretty neat still! If you go back to your cholera_deaths Table view, you'll see also a column called 'count', this tells us how badly it hit each household. This will be the value we want to style our data on.
+
+Head back to your Map view. To make this data communicate the intensity of cholera in each household, let's make a thematic map. Click the Style tool button on the right of the screen. Take a look at the out-of-the-box styles provided, if you mouse over them, you'll find one named, 'Bubbles', that's the one we'll use. Click it. Below that, change the Column drop down and select 'count'. The map should update right as you click it, pretty neat? It doesn't look the best it can though. Do each of the following,
 
   - Change the Radius (min-max) to, 1 to 8. 
 
