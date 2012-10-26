@@ -162,26 +162,31 @@ This is the case where you have many values in a second table, and you want to g
     <tr>
         <td>1</td>
         <td>BRA</td>
+        <td>m</td>
         <td>4</td>
     </tr>
     <tr>
         <td>2</td>
         <td>BRA</td>
+        <td>t</td>
         <td>5</td>
     </tr>
     <tr>
         <td>3</td>
         <td>BRA</td>
+        <td>w</td>
         <td>2</td>
     </tr>
     <tr>
         <td>4</td>
         <td>USA</td>
+        <td>t</td>
         <td>2</td>
     </tr>
     <tr>
         <td>5</td>
         <td>USA</td>
+        <td>f</td>
         <td>1</td>
     </tr>
 </table>
