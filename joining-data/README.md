@@ -268,7 +268,6 @@ One of the most exciting JOINS is through the use of geospatial intersections. S
     <tr>
         <th>cartodb_id</th>
         <th>the_geom</th>
-        <th>population</th>
     </tr>
     <tr>
         <td>1</td>
