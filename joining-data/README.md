@@ -12,6 +12,8 @@ Joining data in CartoDB is a very common task. Not all joins are equal though, a
 
 ##### 3. Join two tables by geospatial intersection!
 
+##### 4. Join two tables dynamically 
+
 ## 1. Join two tables by a shared value in each row
 
 This is where you have a value in both tables, say iso codes and you can match the value of a row (e.g. iso_code='USA') from one table with the same value in a second table (e.g. iso='USA'). Column name doesn't matter, just the content!
@@ -180,7 +182,7 @@ This is the case where you have many values in a second table, and you want to g
     <tr>
         <td>4</td>
         <td>USA</td>
-        <td>t</td>
+        <td>m</td>
         <td>2</td>
     </tr>
     <tr>
@@ -195,7 +197,7 @@ This is the case where you have many values in a second table, and you want to g
 Above is our new example data. Here we want to get the sum total of all counts in each country. So, the SQL would look like this,
 
     SELECT 
-        table_1.the_geom,table_1.iso_code,SUM(table_2.total) 
+        table_1.the_geom,table_1.iso_code,SUM(table_2.total) as total
     FROM 
         table_1, table_2 
     WHERE 
@@ -222,8 +224,103 @@ The biggest change now is the use of the GROUP BY method. This collapses all row
 
 Pretty simple? You can do this all day long!
 
+Here are some other types of functions other than SUM you might be interested in,
+
+(http://www.postgresql.org/docs/9.1/static/functions-aggregate.html)[http://www.postgresql.org/docs/9.1/static/functions-aggregate.html]
+
 ## 3. Join two tables by geospatial intersection!
 
-One of the most exciting is the use of geospatial intersections. Say you have a set of points in one table, and a set of state polygons with iso_codes in a second. You could use a geospatial intersection to give each point an iso code based on the state they fall in. We can also of course combine SUM, AVG, MIN, MAX and all that good stuff here too!
+One of the most exciting JOINS is through the use of geospatial intersections. Say you have a set of points in one table, and a set of state polygons with iso_codes in a second. You could use a geospatial intersection to give each point an iso code based on the state they fall in. We can also of course combine SUM, AVG, MIN, MAX and all that good stuff here too! Here is some example data,
 
-(todo)
+
+
+<h6>table_1</h6>
+<table>
+    <tr>
+        <th>cartodb_id</th>
+        <th>the_geom</th>
+        <th>iso_code</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Polygon...</td>
+        <td>USA</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Polygon...</td>
+        <td>BRA</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Polygon...</td>
+        <td>BEL</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Polygon...</td>
+        <td>GAB</td>
+    </tr>
+</table>
+
+<h6>table_2</h6>
+<table>
+    <tr>
+        <th>cartodb_id</th>
+        <th>the_geom</th>
+        <th>population</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Point...</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Point...</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Point...</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Point...</td>
+    </tr>
+</table>
+
+
+Now, let's say we just want to know the total number of Points from table_2 that fall in table_1. Easy, let's see the SQL,
+
+    SELECT 
+        table_1.the_geom,table_1.iso_code,COUNT(*) as count 
+    FROM 
+        table_1, table_2 
+    WHERE 
+        ST_Intersects(table_1.the_geom, table_2.the_geom)
+
+The ST_Intersects function is one you are going to use again and again. You'll love it. Now, let's do the same but insert the result into a new column. Start by adding a column to table_1 called, total and make it numeric. Next, run,
+
+    UPDATE 
+        table_1 as t1
+    SET 
+      total =  (
+                    SELECT
+                        Count(*)
+                    FROM
+                        table_2
+                    WHERE
+                        ST_Intersects(the_geom, t1.the_geom)
+                    )
+
+Nifty right? You can now use this in combination with SUM, AVG, MAX all that good stuff to get the values you need from one table into the next. 
+
+## 4. Join two tables dynamically 
+
+Finally, just a note about doing the above for a map you build on Leaflet or Google maps. You may not always want to write the result into table_1, instead, you may want to query live from the browser based on something the user is doing. In those cases, use the SELECT statements. If you are rendering a map with the results, you need to remember to include the_geom_webmercator is all! It is our hidden reprojection of the_geom that makes the final map. Here is the above query modified to include it,
+
+    SELECT 
+        table_1.the_geom,table_1.iso_code,COUNT(*) as count, table_1.the_geom_webmercator
+    FROM 
+        table_1, table_2 
+    WHERE 
+        ST_Intersects(table_1.the_geom, table_2.the_geom)
