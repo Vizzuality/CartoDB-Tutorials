@@ -119,9 +119,103 @@ In the second exampe, we run a subquery, so for each row of table_1 it runs the 
 
 ## 2. Join two tables by aggregating the shared values in a second table
 
-This is the case where you have many values in a second table, and you want to get their collected value where they match the first. You can do things like SUM, AVG, MIN, MAX, etc.
+This is the case where you have many values in a second table, and you want to get their collected value where they match the first. You can do things like SUM, AVG, MIN, MAX, etc. We will do just like we did above, but in this case we will use a function to aggregate all the shared values in the second table first. 
 
-(todo)
+
+<h6>table_1</h6>
+<table>
+    <tr>
+        <th>cartodb_id</th>
+        <th>the_geom</th>
+        <th>iso_code</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Polygon...</td>
+        <td>USA</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Polygon...</td>
+        <td>BRA</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Polygon...</td>
+        <td>BEL</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Polygon...</td>
+        <td>GAB</td>
+    </tr>
+</table>
+
+<h6>table_2</h6>
+<table>
+    <tr>
+        <th>cartodb_id</th>
+        <th>iso</th>
+        <th>day</th>
+        <th>total</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>BRA</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>BRA</td>
+        <td>5</td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>BRA</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>USA</td>
+        <td>2</td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>USA</td>
+        <td>1</td>
+    </tr>
+</table>
+
+
+Above is our new example data. Here we want to get the sum total of all counts in each country. So, the SQL would look like this,
+
+    SELECT 
+        table_1.the_geom,table_1.iso_code,SUM(table_2.total) 
+    FROM 
+        table_1, table_2 
+    WHERE 
+        table_1.iso_code = table_2.iso
+    GROUP BY
+        table_1.iso_code, table_2.iso
+
+The biggest change now is the use of the GROUP BY method. This collapses all rows that have a shared iso value, and then using SUM it sums up all the values in total from those collapsed rows! Nice right? Now, lets add a column to table_1 called 'total' and make it numeric. Now to do the insert, 
+
+
+    UPDATE 
+        table_1 as t1
+    SET 
+      total =  (
+                    SELECT
+                        SUM(total)
+                    FROM
+                        table_2
+                    WHERE
+                        iso = t1.iso_code
+                    GROUP BY 
+                      iso
+                    )
+
+Pretty simple? You can do this all day long!
 
 ## 3. Join two tables by geospatial intersection!
 
