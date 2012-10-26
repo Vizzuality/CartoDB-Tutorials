@@ -18,11 +18,20 @@ This is where you have a value in both tables, say iso codes and you can match t
 
 
 <table>
-    <th>table_1
+    <th>table_1</th>
     <tr>
-        <td>cartodb_id</td>
-        <td>the_geom</td>
-        <td>iso_code</td>
+        <th>cartodb_id</th>
+        <th>the_geom</th>
+        <th>iso_code</th>
+    </tr>
+</table>
+
+<table>
+    <th>table_2</th>
+    <tr>
+        <th>cartodb_id</th>
+        <th>the_geom</th>
+        <th>iso_code</th>
     </tr>
 </table>
 
