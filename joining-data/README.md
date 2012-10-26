@@ -17,8 +17,8 @@ Joining data in CartoDB is a very common task. Not all joins are equal though, a
 This is where you have a value in both tables, say iso codes and you can match the value of a row (e.g. iso_code='USA') from one table with the same value in a second table (e.g. iso='USA'). Column name doesn't matter, just the content!
 
 
+<h6>table_1</h6>
 <table>
-    <th>table_1</th>
     <tr>
         <th>cartodb_id</th>
         <th>the_geom</th>
@@ -26,8 +26,8 @@ This is where you have a value in both tables, say iso codes and you can match t
     </tr>
 </table>
 
+<h6>table_2</h6>
 <table>
-    <th>table_2</th>
     <tr>
         <th>cartodb_id</th>
         <th>the_geom</th>
