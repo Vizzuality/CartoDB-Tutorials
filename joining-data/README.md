@@ -18,8 +18,11 @@ This is where you have a value in both tables, say iso codes and you can match t
 
 
 <table>
+    <th>table_1
     <tr>
-        <td>Foo</td>
+        <td>cartodb_id</td>
+        <td>the_geom</td>
+        <td>iso_code</td>
     </tr>
 </table>
 
