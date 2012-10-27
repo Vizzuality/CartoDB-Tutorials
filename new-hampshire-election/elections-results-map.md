@@ -3,11 +3,7 @@ Mapping Policital data using [CartoDB](http://cartodb.com)
 
 ##Summary
 
-This tutorial will walk you through a set of basic steps to build basic to advanced maps using CartoDB
-
-Keep in mind that this tutorial was built for users with paid accounts. Free accounts will not have enough space to use the full United States counties shapefile mentioned below.
-
-To see the final application, go here,
+This tutorial will walk you through a set of basic steps to build basic to advanced maps using CartoDB.
 
 ## Data sources
 
@@ -43,12 +39,12 @@ One great source for basic color scales meant for mapping is [Color Brewer 2](ht
 
 Now, click the 'Carto' tab in our style tool. This takes you to your editor, notice the Undo/Redo buttons in the lower left. Feel free to play around. Colors on the map are coded in hexidecimal, so #FFFFFF is white and #000000 is black. If you aren't familar with this, we recommend you do a bit of playing around and reading online. I'm going to just paste in my 5 new colors to start, replacing the each hex with one I got from ColorBrewer above. 
 
-(IMAGE)
-
 This is still wrong, we have incorrect bins. You'll notice that our colors don't include the far ends of the spectrum, near 1. So, lets edit the bins to be <=1, <=0.6, <=0.52, <=0.48, <=0.4. (most red), and hit 'Apply style'
-
-(IMAGE)
 
 Still I don't love it, the white in the areas that are split is too bright compared to the rest. Change the color after <=0.52 to #EEEEEE
 
 Great, now you have a nice looking election map!
+
+## Sharing your map
+
+To now tweet or email your map, click 'Share this map'. Now, simply select the URL to email it!
