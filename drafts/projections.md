@@ -11,7 +11,7 @@ By doing these transformations behind the scenes, we make it really simple for y
 
 ## Introduction to the_geom_webmercator
 
-Start by loading in some sample data from your CartDB dashboard. You can find those options under the 'Creat a new table' button, by clicking 'Sample data'. Let's choose 'Populated places' by clicking it. CartoDB will now load this data and take you to the result.
+Start by loading in some sample data from your CartDB dashboard. You can find those options under the 'Create a new table' button, by clicking 'Sample data'. Let's choose 'Populated places' by clicking it. CartoDB will now load this data and take you to the result.
 
 Let's start by looking at the Map View. What you should see are hundreds of points all over the world. If you click on any of the points, you'll see an infowindow with the data associated with them. Now, switch back to your Table view.
 
