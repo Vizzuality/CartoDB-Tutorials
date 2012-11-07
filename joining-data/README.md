@@ -14,6 +14,10 @@ Joining data in CartoDB is a very common task. Not all joins are equal though, a
 
 ##### 4. Join two tables dynamically 
 
+Finally, we'll run through a working example using the join method described in #3 above.
+
+##### 5. An example of Joining two real datasets
+
 ## 1. Join two tables by a shared value in each row
 
 This is where you have a value in both tables, say iso codes and you can match the value of a row (e.g. iso_code='USA') from one table with the same value in a second table (e.g. iso='USA'). Column name doesn't matter, just the content!
@@ -315,7 +319,7 @@ Nifty right? You can now use this in combination with SUM, AVG, MAX all that goo
 
 ## 4. Join two tables dynamically 
 
-Finally, just a note about doing the above for a map you build on Leaflet or Google maps. You may not always want to write the result into table_1, instead, you may want to query live from the browser based on something the user is doing. In those cases, use the SELECT statements. If you are rendering a map with the results, you need to remember to include the_geom_webmercator is all! It is our hidden reprojection of the_geom that makes the final map. Here is the above query modified to include it,
+Just a note about doing the above for a map you build on Leaflet or Google maps. You may not always want to write the result into table_1, instead, you may want to query live from the browser based on something the user is doing. In those cases, use the SELECT statements. If you are rendering a map with the results, you need to remember to include the_geom_webmercator is all! It is our hidden reprojection of the_geom that makes the final map. Here is the above query modified to include it,
 
     SELECT 
         table_1.the_geom,table_1.iso_code,COUNT(*) as count, table_1.the_geom_webmercator
@@ -323,3 +327,43 @@ Finally, just a note about doing the above for a map you build on Leaflet or Goo
         table_1, table_2 
     WHERE 
         ST_Intersects(table_1.the_geom, table_2.the_geom)
+
+## 5. Join two real datasets
+
+Now, let's run through an example using a couple real datasets. Start by getting two tables ready in your CartoDB account. Both datasets are available as 'sample data' from your CartoDB dashboard. To find them, go to your account dashboard. Underneith the large green 'Create a new table' button on the right, you'll see a link 'Sample data', click it.
+
+Next, you will find the dataset called, World Rivers and click it. This will load the data and take you to the resulting table. If you click on Map View, you'll see that it is a basic map of some  of the worlds large rivers. This is data from naturalearth.com. Take note of the name of the table that was created, mine is 'table_50m_rivers_lake_cen'
+
+Next, go back to your Dashboard by clicking the CartoDB logo in the upper left. Again, click the link to 'Sample data'. This time, find the dataset called 'World Borders'. When the table finishes loading, click Map View and you'll see that it is a dataset of all country borders. Let's join the rivers with the countries so we can make a choropleth of the total length of big rivers in countries around the world. Of course, our map is going to ignore all the little rivers not included in our dataset, but this is just an example!
+
+### Joining the data
+
+From inside your country borders table create a new column to hold some numerical data. In the Table view, click the drop down arrow beside any column name, in the menu, click 'Add new column'. In the options, add big_rivers as the column and select number as the type. Finally, click 'create column'.
+
+Now, like in the join explainations above, we'll do this in two steps. In the first, we do a SELECT to see the data joined in our browser. Second, we'll do an UPDATE so that we write the value to the new column we just created. 
+
+#### Join through a SELECT statement
+
+    SELECT tm_world_borders_s.cartodb_id, 
+    COUNT(table_50m_rivers_lake_cen.cartodb_id) FROM 
+    tm_world_borders_s, table_50m_rivers_lake_cen WHERE 
+    ST_Intersects(tm_world_borders_s.the_geom, table_50m_rivers_lake_cen.the_geom) 
+    GROUP BY tm_world_borders_s.cartodb_id
+
+In the above query, we are counting all the rivers that intersect a country. Be sure that your world borders table is named the same as mine, tm_world_borders_s. We GROUP BY the country name so that as a result we get country name and count of big rivers. Great!
+
+#### Updating a table using a JOIN
+
+Now lets run a similar query, but write the numeric value to the column we created earlier, big_rivers. Run the following,
+
+    UPDATE tm_world_borders_s wb SET big_rivers = (
+    SELECT COUNT(table_50m_rivers_lake_cen.cartodb_id) FROM 
+    table_50m_rivers_lake_cen WHERE 
+    ST_Intersects(wb.the_geom, table_50m_rivers_lake_cen.the_geom))
+
+In the above query, we are running the UPDATE to our new column big_rivers, but running a nested query that selects to count of all rivers that intersect it. Like the above examples, we use an alias for the name of our world borders table name, wb. You can see that the alias is then used when we run the ST_Intersects function, indicating that for ever row in the wb table, we count the rivers that intersect its geometry. 
+
+#### Mapping the results
+
+Now, go back to the Map View for your world borders table. Click the Carto icon on the right hand side of your map. In the menu that pops out, click the overview image of the choropleth map (the one with different colors in each polygon). Below, in the menu, for Column select, big_rivers. Now take a look at the map and you can see which countries the most rivers in our dataset pass through. 
+
