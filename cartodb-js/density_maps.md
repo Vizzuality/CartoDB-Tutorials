@@ -11,7 +11,7 @@ For this tutorial you are going to need a code editor that will allow you to edi
 
 You can see some of the original maps here*, and here** but for this work we are going to need the raw data, which you can download here,
 
-	data/bike_crashes.shp
+	data/crashes_2007_2009.zip
 
 ## Preparation
 
