@@ -141,6 +141,8 @@ Great! But now my labels are wrong. If you look at the Carto editing window agai
       "#F8F8F8": "1-3 accidents"
     }
 
+Save your file and then go back to your browser where you have the file loaded. Hit refresh and you should be good to go!
+
 ![density map](http://i.imgur.com/5RhPU.png)
 
 
