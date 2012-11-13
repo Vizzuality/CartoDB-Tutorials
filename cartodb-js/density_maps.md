@@ -37,6 +37,8 @@ Start by making a copy of template.html and rename it to accident_density.html
 
 Go ahead and open the file in your browser. In most cases, you can simply drag the file from your desktop directly onto a new window and it should load. You'll notice right away that this data contains information about New Hampshire, in fact, this is election data generated in the tutorial here (LINK). We are going to use this to get a map of our bike accidents data. 
 
+![template](http://i.imgur.com/muerP.png)
+
 Open the accident_density.html file in your code editor. Leave the webpage open as well, we'll come back to it!
 
 One of the first things we should change is what area the map centers on when you load it. This information is given on line number 27 where it says,
@@ -139,31 +141,7 @@ Great! But now my labels are wrong. If you look at the Carto editing window agai
       "#F8F8F8": "1-3 accidents"
     }
 
-
-
-
-
-
-The first thing we are going to do is swap out the layerUrl with the one that corresponds to the map you just made. Go back to your CartoDB density grid map.
-
-Share, make it public
-Get API string
-
-Next, flip back to your accident_density.html and find on line 20 where layerUrl is set. Change it to your map URL, in my case it looks like this,
-
-	layerUrl = "http://staging20.cartodb.com/api/v1/viz/453/viz.json";
-
-
-
-
-Bike routes
-
-https://data.cityofchicago.org/Transportation/Bike-Routes/2wak-k8cp
-
-
-
-
-
+![density map](http://i.imgur.com/5RhPU.png)
 
 
 
