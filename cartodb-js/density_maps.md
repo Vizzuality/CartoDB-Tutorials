@@ -73,10 +73,6 @@ Let's increase that to 10, so,
 
 Save the file and refresh your browser to see the change if you like. 
 
-## Adding a legend. 
-
-One thing left is the legend. In the template.html file we provided you we added a very simple way to make a legend. You now have two options: (1) Remove the legend, or (2) Update it for you data. We'll show you both.
-
 #### Remove the legend
 
 Removing the legend is easy, if you would rather update it though, skip to the next section. On line 81 you will find a line that looks like the following,
@@ -87,61 +83,7 @@ You just need to add '//' to the beginning of the call so that when the page loa
 
 	//CartoDBLegend();
 
-#### Updating the legend. 
-
-The colors and names on the legend are created on lines 58-64. They look like this,
-
-    bins = {
-      "#0571B0": "Very Democratic (60%)",
-      "#92C5DE": "Mosly Democratic (52%-60%)",
-      "#EEEEEE": "Close decision (48%-52%)",
-      "#F4A582": "Mosly Republican (52%-60%)",
-      "#CA0020": "Very Republican (60%)"
-    }
-
-The colors are ones we get from the style we created on CartoDB. So switch back to your crashes_2007_2009 Map View on your CartoDB account. Now, click the Style editor icon on the right of the map. You can find the exact colors set for each bin by clicking the Carto tab within your style editor. My style looks like this,
-
-    #crashes_2007_2009 {
-       line-color:#FFFFFF;
-       line-width:0;
-       line-opacity:0.44;
-       polygon-opacity:0.44;
-       polygon-fill:#B10026
-    }
-    #crashes_2007_2009 [points_count<=70] {
-       polygon-fill:#E31A1C
-    }
-    #crashes_2007_2009 [points_count<=30] {
-       polygon-fill:#FD8D3C
-    }
-    #crashes_2007_2009 [points_count<=10] {
-       polygon-fill:#FED976
-    }
-    #crashes_2007_2009 [points_count<=3] {
-       polygon-fill:#F8F8F8;
-    }
-
-To update my bins in my accident_density.html file, I'm going to cut each of the colors, they are the ones that look like this #B10026 after 'polygon-fill:', from the Carto and paste them into the HTML code where I create the legend. I'm just going to copy them in the order that I see them so that accident_density.html lines 58-64 now looks like this,
-
-    bins = {
-      "#B10026": "Very Democratic (60%)",
-      "#E31A1C": "Mosly Democratic (52%-60%)",
-      "#FD8D3C": "Close decision (48%-52%)",
-      "#FED976": "Mosly Republican (52%-60%)",
-      "#F8F8F8": "Very Republican (60%)"
-    }
-
-Great! But now my labels are wrong. If you look at the Carto editing window again in your CartoDB account, you can see where each of the values is set. For example, where points_count<=70 is becoming this color, #E31A1C. So I'm going to use each of those lines to create the text. So now my lines 58-64 look like this,
-
-    bins = {
-      "#B10026": "More than 70 accidents",
-      "#E31A1C": "30-70 accidents",
-      "#FD8D3C": "10-30 accidents",
-      "#FED976": "4-10 accidents",
-      "#F8F8F8": "1-3 accidents"
-    }
-
-Save your file and then go back to your browser where you have the file loaded. Hit refresh and you should be good to go!
+Save your file and then go back to your browser where you have the file loaded. Hit refresh and you should be good to go! If you want to have a legend in your  map, go to the (LEGEND) tutorial now.
 
 ![density map](http://i.imgur.com/5RhPU.png)
 

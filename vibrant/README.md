@@ -1,56 +1,74 @@
-Density maps [CartoDB](http://cartodb.com)
+ViBRANT Workshop on data analysis and visualization using CartoDB
 == 
 
-##Summary
+We will be doing training and discussing techniques for analysis and visualization of data particularly in maps. As part of ViBRANt we have developed multiple visualization techiques and Open Source software that we will like to show you. The most important part is CartoDB, an Open Source Geospatial Database on the Cloud (www.cartodb.com). The workshop will use data, of course, from the Biodiversity Informatics community.
 
-Density maps are great ways to show complex underlying data in a simple and visually appealing way. We have developed a couple of custom tools in CartoDB to make it really easy, here I'll show you how to use them. In this tutorial, we are going to use data from 2012 bicycle crash reports in Chicago. This is a really interesting dataset that can be used for a lot of reasons. 
+CartoDB is now being used by many users all around the world. On our community is used by projects like Map Of Life, Vertnet, Canadensys and by institutions like Yale, Harvard, Berkley, Columbia, Oxford and many more.
 
-For this tutorial you are going to need a code editor that will allow you to edit HTML files. You will probably run into problems if you try to do the tutorial in a document editor such as Word or Open Office, they often add invisible markup that will make your file unreadable by web browsers. We recommend taking a look through the list here, http://en.wikipedia.org/wiki/Source_code_editor. In particular, TextMate or Notepad++ will do the trick. 
+ * Hosted by Vizzuality
+ * Friday, November 16, 2012 from 9:30 AM to 5:30 PM
+ * Vizzuality Spain, Eloy Gonzalo 27, 2 planta, oficina 7, Madrid, Madrid 28010 (Map: http://bit.ly/T4JrzY)
 
-## Data sources
+### Schedule
 
-You can see some of the original maps here*, and here** but for this work we are going to need the raw data, which you can download here,
+ * 9:30-10:30 Part I - Introduction & Organization
+ * 10:30-11 Part II - Creating Maps
+ * 11-11:20 Coffee
+ * 11:20-12 Part II - Basic analysis on maps
+ * 12-1:00 Part III - Advanced analysis on maps
+ * 1-2 Lunch
 
+## Part I - Introduction & Organization
 
-https://www.google.com/fusiontables/DataSource?dsrcid=561840
+ * Tour of CartoDB
+ ** Console
+ ** 2.0
+ ** Maps API
+ ** SQL API
+ ** carto.js
 
+## Part II - Creating Maps
 
-**http://derekeder.com/maps/chicago-bike-crash-reports/index.html
-**http://stevevance.net/crashportal/?page=bikecrash
+#### Basic
 
-## Preparation
+ * Upload Kew data from GBIF
+ * Create points map
+ * Add query
+ * Add style
+ * Share
 
-Load the data
+#### Moderate
 
-/// update table_2007_2009_bicycles_ set the_geom = ST_SetSRID(ST_MakePoint(split_part(split_part(geometry,',',1), '>',3)::numeric, split_part(geometry,',',2)::numeric),4326)
+ * Query data for only UK
+ * Table from query
+ * View Map
+ * Style based on county
+ * Share
 
-Take a look at the map
+#### Hard
 
-Create a hexgrid
+ * Query for all records within radius of Kew gardents
+ * 51.478042,-0.291098
+ * Create 3 rings plus their count
+ * Color by their count, as in choropleth
+ * Share
 
-## Preparing the code
+## Part III - Advanced analysis on maps
 
-Start with TutorialTemplate.html
+#### Basic
 
-Rename it to accident_density.html
+ * Introduction to ConvexHull/ConcaveHull
+ * Overview of type-based styles
+ * Create species ranges within UK...
+ * Map+Share
 
-Go ahead and open the file in your browser. In most cases, you can simply drag the file from your desktop directly onto a new window and it should load. You will find a blank map centered on New Hampshire. This isn't going to be useful, our data is in Chicago, so let's fix that.
+#### Moderate
+ 
+ * Introduction to CDB_RectangularGrid, CDB_HexagonGrid
+ * Create intensity map
+ * Return to SQL API
 
-Open the accident_density.html file in your code editor, leave it loaded in your browser as well. 
-
-On Line 15 you can 
-
-
-
-
-The first thing we are going to do is swap out the layerUrl with the one that corresponds to the map you just made. Go back to your CartoDB density grid map.
-
-Share, make it public
-Get API string
-
-Next, flip back to your accident_density.html and find on line 20 where layerUrl is set. Change it to your map URL, in my case it looks like this,
-
-    layerUrl = "http://staging20.cartodb.com/api/v1/viz/453/viz.json";
+#### Hard
 
 
 
