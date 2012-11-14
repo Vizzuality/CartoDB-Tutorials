@@ -29,7 +29,7 @@ CartoDB is now being used by many users all around the world. On our community i
 
 ## Part II - Creating Maps
 
-[Part II Write-up](../vibrant/Part_II_Creating_Maps.md)
+[Part II Write-up](Part_II_Creating_Maps.md)
 
 #### Basic
 
