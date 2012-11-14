@@ -12,10 +12,9 @@ CartoDB is now being used by many users all around the world. On our community i
 ### Schedule
 
  * 9:30-10:30 Part I - Introduction & Organization
- * 10:30-11 Part II - Creating Maps
+ * 10:30-11 Part II - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
  * 11-11:20 Coffee
- * 11:20-12 Part II - Basic analysis on maps
- * 12-1:00 Part III - Advanced analysis on maps
+ * 11:20-1 Part III - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
  * 1-2 Lunch
 
 ## Part I - Introduction & Organization
@@ -27,9 +26,7 @@ CartoDB is now being used by many users all around the world. On our community i
    * SQL API
    * carto.js
 
-## Part II - Creating Maps
-
-[Full Write-up](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
+## Part II - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
 
 #### Basic
 
@@ -55,7 +52,7 @@ CartoDB is now being used by many users all around the world. On our community i
  * Color by their count, as in choropleth
  * Share
 
-## Part III - Advanced analysis on maps
+## Part III - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
 
 #### Basic
 

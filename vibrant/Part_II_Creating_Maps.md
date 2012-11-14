@@ -27,8 +27,9 @@ Part II - Creating Maps | ViBRANT Workshop
  * Color by their count, as in choropleth
  * Share
 
+Next section - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
 
-[Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
+or head [back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
 
 
