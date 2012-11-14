@@ -3,13 +3,30 @@ Part II - Creating Maps | ViBRANT Workshop
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
-#### Basic
+## Section 1. Basic
 
  * Upload Kew data from GBIF
  * Create points map
  * Add query
  * Add style
  * Share
+
+## Section 2. Moderate
+
+ * Query data for only UK
+ * Table from query
+ * View Map
+ * Style based on county
+ * Share
+
+## Section 3. Hard
+
+ * Query for all records within radius of Kew gardents
+ * 51.478042,-0.291098
+ * Create 3 rings plus their count
+ * Color by their count, as in choropleth
+ * Share
+
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
