@@ -1,7 +1,5 @@
-ViBRANT Workshop on data analysis and visualization using CartoDB
+ViBRANT Workshop | Part II - Creating Maps
 == 
-
-# Part II - Creating Maps
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
