@@ -21,11 +21,11 @@ CartoDB is now being used by many users all around the world. On our community i
 ## Part I - Introduction & Organization
 
  * Tour of CartoDB
- ** Console
- ** 2.0
- ** Maps API
- ** SQL API
- ** carto.js
+ * * Console
+ * * 2.0
+ * * Maps API
+ * * SQL API
+ * * carto.js
 
 ## Part II - Creating Maps
 
@@ -60,6 +60,9 @@ CartoDB is now being used by many users all around the world. On our community i
  * Introduction to ConvexHull/ConcaveHull
  * Overview of type-based styles
  * Create species ranges within UK...
+ * Calculate area
+ * * write area back to table
+ * * display on map as LABLE
  * Map+Share
 
 #### Moderate
