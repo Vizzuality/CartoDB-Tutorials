@@ -5,17 +5,25 @@ Part II - Creating Maps | ViBRANT Workshop
 
 ## Section 1. Basic
 
+### Modifying data
+
 #### remove records without geometry
 
 ```sql
 DELETE FROM occurrence_search_coords WHERE the_geom IS NULL
 ```
 
+### Explore dataset 
+
 #### Find most common species in the Kew dataset
 
 ```sql
 SELECT scientific_name_interpreted, count(*) FROM occurrence_search_coords GROUP BY scientific_name_interpreted ORDER BY count(*) DESC
 ```
+
+## Section 2. Moderate
+
+### Combine styles and SQL
 
 #### Style a single species differently
 
@@ -31,7 +39,7 @@ SELECT scientific_name_interpreted, count(*) FROM occurrence_search_coords GROUP
    marker-type:ellipse;
    marker-allow-overlap:true;
    [scientific_name_interpreted = 'Lygodium circinnatum'] {
-      marker-fill:blue
+      marker-fill:#f24e35
    } 
 
 }
@@ -43,22 +51,108 @@ SELECT scientific_name_interpreted, count(*) FROM occurrence_search_coords GROUP
 SELECT * FROM occurrence_search_coords WHERE scientific_name_interpreted = 'Lygodium circinnatum'
 ```
 
- * Dig
+#### Using two conditions at the same time
 
-   SELECT scientific_name_interpreted, country, count(*) FROM occurrence_search_coords GROUP BY scientific_name_interpreted, country ORDER BY count(*) DESC
+the comma between [],[] works like an AND
 
-## Section 2. Moderate
+```css
+#occurrence_search_coords {
+   marker-fill:transparent;
+   marker-width:6;
+   marker-line-color:white;
+   marker-line-width:1;
+   marker-opacity:0.75;
+   marker-line-opacity:0.75;
+   marker-placement:point;
+   marker-type:ellipse;
+   marker-allow-overlap:true;
+   [scientific_name_interpreted = 'Lygodium circinnatum' ],[ country='Philippines' ] {
+      marker-fill:blue
+   }
+}
+```
 
- * Query data for only UK
- * Table from query
- * View Map
- * Style based on county
- * Share
+without a comma [][] works like an OR
+
+```css
+#occurrence_search_coords {
+   marker-fill:transparent;
+   marker-width:6;
+   marker-line-color:white;
+   marker-line-width:1;
+   marker-opacity:0.75;
+   marker-line-opacity:0.75;
+   marker-placement:point;
+   marker-type:ellipse;
+   marker-allow-overlap:true;
+   [scientific_name_interpreted = 'Lygodium circinnatum' ][ country='Philippines' ] {
+      marker-fill:blue
+   }
+}
+```
+
+nested, of course, cascades!
+
+```css
+#occurrence_search_coords {
+   marker-fill:#AA2143;
+   marker-width:6;
+   marker-line-color:white;
+   marker-line-width:1;
+   marker-opacity:0.75;
+   marker-line-opacity:0.75;
+   marker-placement:point;
+   marker-type:ellipse;
+   marker-allow-overlap:true;
+   [ country='Philippines' ] {
+      marker-opacity:0.15;
+      [scientific_name_interpreted = 'Lygodium circinnatum' ] {
+         marker-opacity:0.75;
+         marker-fill: blue
+      }
+   }   
+}
+```
+
+or set two styles!
+
+```css
+#occurrence_search_coords::first [scientific_name_interpreted = 'Lygodium circinnatum' ]{
+   marker-fill:#AA2143;
+   marker-width:3;
+   marker-line-color:white;
+   marker-line-width:1;
+   marker-opacity:0.75;
+}
+#occurrence_search_coords::second [scientific_name_interpreted = 'Lygodium circinnatum' ]{
+   marker-fill:transparent;
+   marker-width:8;
+   marker-line-color:red;
+   marker-line-width:1;
+   marker-opacity:0.75;
+}
+```
+
+
+### More SQL
+
+#### Find number of records per country
+
+```sql
+SELECT country, count(*) FROM occurrence_search_coords GROUP BY country ORDER BY country ASC
+```
+
+#### Find all records with an empty country field
+
+```sql
+SELECT * FROM occurrence_search_coords WHERE country = ''
+```
 
 ## Section 3. Hard
 
  * Query for all records within radius of Kew gardens
  * 51.478042,-0.291098
+ * 40.434633,-3.700511
  * Create 3 rings plus their count
  * Color by their count, as in choropleth
  * Share
