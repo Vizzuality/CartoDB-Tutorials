@@ -40,50 +40,11 @@
     cartodb.createLayer(map, layerUrl)
      .on('done', function(layer) {
       map.addLayer(layer);
-
-      layer.on('featureClick', function(e, pos, latlng, data) {
-        console.log(e, pos, latlng, data);
-      });
-
-      layer.on('error', function(err) {
-        console.log('error: ' + err);
-      });
-
-    }).on('error', function() {
-      console.log("Your CartoDB layer failed to load due to an error");
     });
-
-    function CartoDBLegend(){
-      $ = cartodb.$;
-      bins = {
-        "#0571B0": "Very Democratic (60%)",
-        "#92C5DE": "Mosly Democratic (52%-60%)",
-        "#EEEEEE": "Close decision (48%-52%)",
-        "#F4A582": "Mosly Republican (52%-60%)",
-        "#CA0020": "Very Republican (60%)"
-      }
-      var mapL = $('#legend');
-      var title = $('<span>').html("Map Legend");
-      var holder = $('<div>').attr('class', 'title');
-          holder.append(title);
-          mapL.append(holder);
-      for (i in bins) {
-        var key = $('<span>').attr('class', 'box'); // can take 'box', 'line', or 'circle' type here for customizing your ledgend
-            key.css('background', i);
-        var val = $('<span>').attr('class', 'value');
-            val.html(bins[i]);
-        var row = $('<div>').attr('class', 'row');
-            row.append(key);
-            row.append(val);
-        mapL.append(row)
-      }
-    }
-    CartoDBLegend();
   }
 	</script>
 </head>
 <body onload="init()">
   <div id='map'></div>
-  <div id='legend'></div>
 </body>
 </html>

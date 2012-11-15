@@ -279,12 +279,9 @@ HAVING count(DISTINCT(the_geom)) > 2
    GROUP BY cell
 ```
 
-Previous section - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
+Next section - [CartoDB on a webpage](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_IV_CartoDB_on_a_webpage.md)
 
-[Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
-
-
-
+or head [back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
 
 
