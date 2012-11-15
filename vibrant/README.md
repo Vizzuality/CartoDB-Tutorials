@@ -46,7 +46,7 @@ CartoDB is now being used by many users all around the world. On our community i
 
 #### Hard
 
- * Query for all records within radius of Kew gardents
+ * Query for all records within radius of Kew gardens
  * 51.478042,-0.291098
  * Create 3 rings plus their count
  * Color by their count, as in choropleth

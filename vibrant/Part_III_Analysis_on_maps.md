@@ -1,4 +1,4 @@
-Part II - Analysis on Maps | ViBRANT Workshop
+Part III - Analysis on Maps | ViBRANT Workshop
 == 
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
@@ -18,7 +18,13 @@ Part II - Analysis on Maps | ViBRANT Workshop
  * Introduction to CDB_RectangularGrid, CDB_HexagonGrid
  * Create intensity map
  * Return to SQL API
+ * Calculate key values
+   * AOO
+   * EOO
+ 
 
+
+Previous section - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
 
