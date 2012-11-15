@@ -156,7 +156,7 @@ GROUP BY country ORDER BY country ASC
 SELECT * FROM occurrence_search_coords WHERE country = ''
 ```
 
-## Section 3. Hard
+## Section 3. Advanced
 
 create a point for Kew Gardens
 

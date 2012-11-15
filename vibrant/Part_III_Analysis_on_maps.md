@@ -210,30 +210,74 @@ WITH
 SELECT scientific_name_interpreted, ST_Multi(ST_Transform(ST_Intersection(a.the_geom_webmercator, b.the_geom_webmercator),4326)) AS the_geom FROM range a, results_1 b
 ```
 
-ST_Multi is a gotcha
+ * note that ST_Multi is a gotcha in CartoDB
 
 ```css
 #vibrant_ranges {
    line-color:#FFFFFF;
-   line-width:0;
+   line-width:0.2;
    line-opacity:0.48;
    polygon-opacity:0.28;
    polygon-fill:black
 }
 ```
 
-
-
 ## Section 2. Moderate
- 
- * Introduction to CDB_RectangularGrid, CDB_HexagonGrid
- * Create intensity map
- * Return to SQL API
- * Calculate key values
-   * AOO
-   * EOO
 
+[CDB_HexagonGrid](https://github.com/Vizzuality/cartodb/blob/develop/lib/sql/CDB_Hexagon.sql#L30)
 
+```sql
+SELECT CDB_HexagonGrid(ST_Envelope(ST_Collect(the_geom_webmercator)), 500000) 
+as the_geom_webmercator FROM vibrant_50
+```
+
+[CDB_RectangleGrid](https://github.com/Vizzuality/cartodb/blob/develop/lib/sql/CDB_RectangleGrid.sql#L19)
+
+```sql
+SELECT CDB_RectangleGrid(ST_Envelope(ST_Collect(the_geom_webmercator)), 100000, 100000) 
+as the_geom_webmercator FROM vibrant_50
+```
+
+Let's combine it with things we've already learned. 
+
+```sql
+WITH grid AS (
+   SELECT CDB_RectangleGrid(ST_Envelope(ST_Collect(the_geom_webmercator)), 100000, 100000) 
+   as cell FROM vibrant_borders WHERE admin = 'Australia'
+   )
+SELECT ST_Multi(ST_Transform(cell,4326)) as the_geom, count(*) 
+FROM grid, occurrence_search_coords 
+WHERE ST_Intersects(cell, the_geom_webmercator) 
+GROUP BY cell
+```
+
+ * remember the ST_Multi gotcha
+
+## Return to SQL API
+
+We can use the SQL API to now query for well represented areas
+
+### EOO
+
+```sql
+SELECT scientific_name_interpreted, ST_Area(ST_ConvexHull(ST_Collect(the_geom))::geography) as eoo 
+FROM occurrence_search_coords 
+GROUP BY scientific_name_interpreted 
+HAVING count(DISTINCT(the_geom)) > 2 
+```
+### Raw richness
+
+```sql
+   WITH grid AS (
+      SELECT CDB_HexagonGrid(ST_Envelope(CDB_XYZ_Extent(0,0,0)), 100000) 
+      as cell FROM vibrant_50
+   )
+   SELECT ST_Multi(ST_Transform(cell,4326)) as the_geom, 
+     count(distinct(scientific_name_interpreted)) 
+   FROM occurrence_search_coords, grid 
+   WHERE ST_Intersects(cell, the_geom_webmercator) 
+   GROUP BY cell
+```
 
 Previous section - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
 

@@ -16,6 +16,7 @@ CartoDB is now being used by many users all around the world. On our community i
  * 11-11:20 Coffee
  * 11:20-1 Part III - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
  * 1-2 Lunch
+ * 2-3 Part IV - [CartoDB on a webpage](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_IV_CartoDB_on_a_webpage.md)
 
 ## Part I - Introduction & Organization
 
@@ -30,47 +31,17 @@ CartoDB is now being used by many users all around the world. On our community i
 
 #### Basic
 
- * Upload Kew data from GBIF
- * Create points map
- * Add query
- * Add style
- * Share
-
 #### Moderate
 
- * Query data for only UK
- * Table from query
- * View Map
- * Style based on county
- * Share
-
-#### Hard
-
- * Query for all records within radius of Kew gardens
- * 51.478042,-0.291098
- * Create 3 rings plus their count
- * Color by their count, as in choropleth
- * Share
+#### Advanced
 
 ## Part III - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
 
-#### Basic
+#### Advanced
 
- * Introduction to ConvexHull/ConcaveHull
- * Overview of type-based styles
- * Create species ranges within UK...
- * Calculate area
-   * write area back to table
-   * display on map as LABLE
- * Map+Share
+## Part IV - [CartoDB on a webpage](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_IV_CartoDB_on_a_webpage.md)
 
-#### Moderate
- 
- * Introduction to CDB_RectangularGrid, CDB_HexagonGrid
- * Create intensity map
- * Return to SQL API
-
-#### Hard
+#### Advanced
 
 
 
