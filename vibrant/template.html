@@ -1,0 +1,89 @@
+<html>
+<head>
+  <link href='http://fonts.googleapis.com/css?family=Neuton:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://cartodb.github.com/cartodb.js/themes/css/leaflet.css" />
+  <link rel="stylesheet" href="http://libs.cartodb.com/cartodb.js/v2/themes/css/cartodb.css" />
+	<script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.uncompressed.js"></script>
+	<style>
+    html, body {padding: 0; margin: 0; font-family: 'Neuton', serif; font-size: 18px;}
+    #map { width: 100%; height:100%; }
+    #legend { position: absolute; right: 50px; top: 20px; width: 250px; padding: 10px; background: white; z-index: 99; }
+    #legend .title, 
+    #legend .row { position: relative; float: left; width: 240px; background: none; padding: 5; margin: 0; }
+    #legend .title {font-weight: bold; font-size: 24px;}
+    #legend .row span { float: left; padding: 0; margin: 0; }
+    
+    #legend .row span.box { width: 20px; height: 20px; background: black; margin: 2px; border: 1px solid #BBB;}
+    #legend .row span.line { width: 20px; height: 6px; background: black; margin: 2px; margin-top: 11px; border: 1px solid #BBB;}
+    #legend .row span.circle { width: 20px; height: 20px; background: black; margin: 2px; border: 1px solid #BBB; border-radius: 50%;}
+
+    #legend .row span.value { line-height: 18px; margin: 5px; max-width: 192px;}
+	</style>
+	<script>
+    var map;
+  function init(){
+    // create leaflet map
+    map = new L.Map('map', { 
+      center: [44, -71.6],
+      zoom: 8
+    })
+
+    // add a nice baselayer from mapbox
+    L.tileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {
+      attribution: 'MapBox'
+    }).addTo(map);
+
+    // define your cartodb layer from your admin 'Share' link
+    var layerUrl = 'http://staging20.cartodb.com/api/v1/viz/nh_final/viz.json';
+
+    // add your layer to the map
+    cartodb.createLayer(map, layerUrl)
+     .on('done', function(layer) {
+      map.addLayer(layer);
+
+      layer.on('featureClick', function(e, pos, latlng, data) {
+        console.log(e, pos, latlng, data);
+      });
+
+      layer.on('error', function(err) {
+        console.log('error: ' + err);
+      });
+
+    }).on('error', function() {
+      console.log("Your CartoDB layer failed to load due to an error");
+    });
+
+    function CartoDBLegend(){
+      $ = cartodb.$;
+      bins = {
+        "#0571B0": "Very Democratic (60%)",
+        "#92C5DE": "Mosly Democratic (52%-60%)",
+        "#EEEEEE": "Close decision (48%-52%)",
+        "#F4A582": "Mosly Republican (52%-60%)",
+        "#CA0020": "Very Republican (60%)"
+      }
+      var mapL = $('#legend');
+      var title = $('<span>').html("Map Legend");
+      var holder = $('<div>').attr('class', 'title');
+          holder.append(title);
+          mapL.append(holder);
+      for (i in bins) {
+        var key = $('<span>').attr('class', 'box'); // can take 'box', 'line', or 'circle' type here for customizing your ledgend
+            key.css('background', i);
+        var val = $('<span>').attr('class', 'value');
+            val.html(bins[i]);
+        var row = $('<div>').attr('class', 'row');
+            row.append(key);
+            row.append(val);
+        mapL.append(row)
+      }
+    }
+    CartoDBLegend();
+  }
+	</script>
+</head>
+<body onload="init()">
+  <div id='map'></div>
+  <div id='legend'></div>
+</body>
+</html>

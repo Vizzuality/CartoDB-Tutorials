@@ -1,4 +1,4 @@
-Part III - Analysis on Maps | ViBRANT Workshop
+Part III - Analysis on Maps  |  ViBRANT Workshop
 == 
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)

@@ -1,4 +1,4 @@
-Part II - Creating Maps | ViBRANT Workshop
+Part II - Creating Maps  |  ViBRANT Workshop
 == 
 
 [Back to workshop](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant)
