@@ -65,6 +65,6 @@ Now, update them with click callback functions like this,
 
 Save your file and take a look. That is the basics of how to interact with multiple layers!
 
-![final map](http://i.imgur.com/9zuwA.png)
+![final map](http://i.imgur.com/EF6Cu.png)
 
 
