@@ -12,6 +12,10 @@ Part II - Creating Maps | ViBRANT Workshop
 ```sql
 DELETE FROM occurrence_search_coords WHERE the_geom IS NULL
 ```
+Share the new SHP
+
+[https://viz2.cartodb.com/tables/occurrence_search_coords.shp](https://viz2.cartodb.com/tables/occurrence_search_coords#/map)
+
 
 ### Explore dataset 
 
@@ -137,7 +141,6 @@ or set two styles!
 }
 ```
 
-
 ### More SQL
 
 #### Find number of records per country
@@ -160,6 +163,8 @@ create a point for Kew Gardens
 ```sql
 SELECT ST_Transform(ST_SetSRID(ST_MakePoint(-0.291098, 51.478042), 4326), 3857) as the_geom_webmercator
 ```
+
+For more about see [projections in CartoDB](https://github.com/Vizzuality/CartoDB-Tutorials/blob/master/drafts/projections.md)
 
 create a point for Sydney
 
@@ -188,25 +193,25 @@ Style points by distance from Sydney!
    marker-line-width:0.7;
    marker-opacity:0.74;
    marker-fill:#B10026;
+   marker-allow-overlap: true;
    [sydney_d>100000] {
    marker-fill:#E31A1C
-}
-   [sydney_d>500000] {
-   marker-fill:#FC4E2A
-}
-   [sydney_d>2500000] {
-   marker-fill:#FD8D3C
-}
-   [sydney_d>5000000] {
-   marker-fill:#FEB24C
-}
-   [sydney_d>10000000] {
-   marker-fill:#FED976
-}
-   [sydney_d>50000000] {
-   marker-fill:#FFFFB2
-}
-
+	}
+	   [sydney_d>500000] {
+	   marker-fill:#FC4E2A
+	}
+	   [sydney_d>2500000] {
+	   marker-fill:#FD8D3C
+	}
+	   [sydney_d>5000000] {
+	   marker-fill:#FEB24C
+	}
+	   [sydney_d>10000000] {
+	   marker-fill:#FED976
+	}
+	   [sydney_d>50000000] {
+	   marker-fill:#FFFFB2
+	}
 }
 ```
 
