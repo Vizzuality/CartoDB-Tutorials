@@ -122,25 +122,6 @@ nested, of course, cascades!
 }
 ```
 
-or set two styles!
-
-```css
-#occurrence_search_coords::first [scientific_name_interpreted = 'Lygodium circinnatum' ]{
-   marker-fill:#AA2143;
-   marker-width:3;
-   marker-line-color:white;
-   marker-line-width:1;
-   marker-opacity:0.75;
-}
-#occurrence_search_coords::second [scientific_name_interpreted = 'Lygodium circinnatum' ]{
-   marker-fill:transparent;
-   marker-width:8;
-   marker-line-color:red;
-   marker-line-width:1;
-   marker-opacity:0.75;
-}
-```
-
 ### More SQL
 
 #### Find number of records per country
