@@ -5,7 +5,7 @@ We will be doing training and discussing techniques for analysis and visualizati
 
 CartoDB is now being used by many users all around the world. On our community is used by projects like Map Of Life, Vertnet, Canadensys and by institutions like Yale, Harvard, Berkley, Columbia, Oxford and many more.
 
-[Link to this doc](http://bit.ly/S2jQpH)
+Link to this doc: [http://bit.ly/S2jQpH](http://bit.ly/S2jQpH)
 
  * Hosted by Vizzuality
  * Friday, November 16, 2012 from 9:30 AM to 5:30 PM
