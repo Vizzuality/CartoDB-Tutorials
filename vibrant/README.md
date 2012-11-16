@@ -20,6 +20,11 @@ CartoDB is now being used by many users all around the world. On our community i
  * 1-2 Lunch
  * 2-3 Part IV - [CartoDB on a webpage](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_IV_CartoDB_on_a_webpage.md)
 
+Other important tutorials
+
+ * [Projections - the_geom and the_geom_webmercator -](/Vizzuality/CartoDB-Tutorials/blob/master/drafts/projections.md)
+ * [Joining Tables](/Vizzuality/CartoDB-Tutorials/blob/master/joining-data/README.md)
+
 ## Part I - Introduction & Organization
 
  * Tour of CartoDB
@@ -29,21 +34,9 @@ CartoDB is now being used by many users all around the world. On our community i
    * SQL API
    * carto.js
 
-## Part II - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
+On to Part II - [Creating Maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_II_Creating_Maps.md)
 
-#### Basic
 
-#### Moderate
-
-#### Advanced
-
-## Part III - [Analysis on maps](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_III_Analysis_on_maps.md)
-
-#### Advanced
-
-## Part IV - [CartoDB on a webpage](/Vizzuality/CartoDB-Tutorials/tree/master/vibrant/Part_IV_CartoDB_on_a_webpage.md)
-
-#### Advanced
 
 
 
