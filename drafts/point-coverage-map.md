@@ -17,6 +17,8 @@ Start by uploading the data to your CartoDB account. After it has uploaded, you 
 
 For this map we are going to want a darker basemap. Changing basemap styles is easy in CartoDB. You can use one of our presupplied basemaps from Mapbox, Google, or Stamen, or you can create your own externally and add it to your account. For this tutorial, we will just use one of the existing basemaps, the Graphite map from Mapbox. To change the basemap of your current map, just click the icon found above the map for the Stamen tileset. You can tell which it is by hovering your mouse over the icons until you locate the one, Graphite (Mapbox). 
 
+(ACTUALLY, @damagedgoods, can you decide at the end of this whether Graphite or the Stamen Toner map looks better with this data?)
+
 ## Styling the data
 
 Click on the Map view in your new table. If you take a look at the map now you should just see a big cloud of points over the Chicago streets. Each point represents a cycling accident over the 2 year span starting in 2007. What we want instead is to show some representation of intensity. 
