@@ -68,7 +68,7 @@
           holder.append(title);
           mapL.append(holder);
       for (i in bins) {
-        var key = $('<span>').attr('class', 'box'); // can take 'box', 'line', or 'circle' type here for customizing your ledgend
+        var key = $('<span>').attr('class', 'circle'); // can take 'box', 'line', or 'circle' type here for customizing your ledgend
             key.css('background', i);
         var val = $('<span>').attr('class', 'value');
             val.html(bins[i]);
