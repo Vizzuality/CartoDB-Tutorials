@@ -33,7 +33,7 @@ Tags are really useful ways for organizing and searching data on your CartoDB ac
 
 In your 'populated_places' table, click 'Map view'. This is where you can customize the look and feel of your data. If you click any of the points on your map, you'll see that no infowindow comes up, this is because we need to turn them on and tell CartoDB which fields from the table we want displayed. 
 
-On the right side of the map, you will see three icons. From top down they are, the SQL dialog, the Style editor, and the Infowindow dialog. Click the third one, the infowindow dialog. CartoDB gives you several options for the general look of your infowindows, you can explore these by clicking the dropdown menu beside 'Theme'. Go ahead and select, 'header orange', next click the toggle beside name and pop_max to turn them on. You can check or uncheck 'title', if it is checked a label is given for the field, if not, just the value is given.
+On the right side of the map, you will see three icons. From top down they are, the SQL dialog, the Style editor, and the Infowindow dialog. Click the third one, the infowindow dialog. CartoDB gives you several options for the general look of your infowindows, you can explore these by clicking the dropdown menu beside 'Theme'. Go ahead and select, 'header orange', next click the toggle beside name and pop_max to turn them on. You can check or uncheck 'title', if it is checked a label is given for the field, if not, just the value is given.  
 
 ## Changing the baselayer
 
