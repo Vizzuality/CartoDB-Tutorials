@@ -3,19 +3,19 @@ Add a legend
 
 ##Summary
 
-Density maps are great ways to show complex underlying data in a simple and visually appealing way. We have developed a couple of custom tools in CartoDB to make it really easy, here I'll show you how to use them. In this tutorial, we are going to use data from 2012 bicycle crash reports in Chicago. This is a really interesting dataset that can be used for a lot of reasons. The data was originally collected by the Illinois Department of Transportation and the most up-to-date datasets can be found over at http://chicagocrashes.org.
+Density maps are great ways to show complex underlying data in a simple and visually appealing way. We have developed a couple of custom tools in CartoDB to make it really easy, here I'll show you how to use them. In this tutorial, we are going to use data from 2012 bicycle crash reports in Chicago. This is a really interesting dataset that can be used for a number of visualizations. The data was originally collected by the Illinois Department of Transportation and the most up-to-date datasets can be found over at http://chicagocrashes.org.
 
 For this tutorial you are going to need a code editor that will allow you to edit HTML files. You will probably run into problems if you try to do the tutorial in a document editor such as Word or Open Office, they often add invisible markup that will make your file unreadable by web browsers. We recommend taking a look through the list here, http://en.wikipedia.org/wiki/Source_code_editor. In particular, TextMate or Notepad++ will do the trick. 
 
 ## Data sources
 
-You can see some of the original maps here*, and here** but for this work we are going to need the raw data, which you can download here,
+You can see some of the original maps here* (need link), and here** (need link) but for this work we are going to need the raw data, which you can download here,
 
 	data/crashes_2007_2009.zip
 
 ## Adding a legend. 
 
-One thing left is the legend. In the template.html file we provided you we added a very simple way to make a legend. 
+In the template.html file we provided you we added a very simple way to make a legend. 
 
 --more here
 
@@ -29,7 +29,7 @@ The colors and names on the legend are created on lines 58-64. They look like th
       "#CA0020": "Very Republican (60%)"
     }
 
-The colors are ones we get from the style we created on CartoDB. So switch back to your crashes_2007_2009 Map View on your CartoDB account. Now, click the Style editor icon on the right of the map. You can find the exact colors set for each bin by clicking the Carto tab within your style editor. My style looks like this,
+The colors are ones we get from the style we created on CartoDB. Switch back to your crashes_2007_2009 Map View on your CartoDB account. Now, click the Style editor icon on the right of the map. You can find the exact colors set for each bin by clicking the Carto tab within your style editor. My style looks like this,
 
     #crashes_2007_2009 {
        line-color:#FFFFFF;
@@ -61,7 +61,7 @@ To update my bins in my accident_density.html file, I'm going to cut each of the
       "#F8F8F8": "Very Republican (60%)"
     }
 
-Great! But now my labels are wrong. If you look at the Carto editing window again in your CartoDB account, you can see where each of the values is set. For example, where points_count<=70 is becoming this color, #E31A1C. So I'm going to use each of those lines to create the text. So now my lines 58-64 look like this,
+Great! But now my labels are wrong. If you look at the Carto editing window again in your CartoDB account, you can see where each of the values is set. For example, where points_count<=70 is represented as, #E31A1C. So I'm going to change line text / descriptions. So now my lines 58-64 look like this,
 
     bins = {
       "#B10026": "More than 70 accidents",
