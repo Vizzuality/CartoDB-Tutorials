@@ -15,9 +15,13 @@
       zoom: 2
     })
 
-    var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2898/viz.json';
+    var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2899/viz.json';
 
-    cartodb.createLayer(map, layerUrl)
+    var layerOptions = {
+              query: "SELECT * FROM {{table_name}} where adm0_a3 = 'USA'"
+    }
+
+    cartodb.createLayer(map, layerUrl, layerOptions)
      .on('done', function(layer) {
       map.addLayer(layer);
     }).on('error', function() {
