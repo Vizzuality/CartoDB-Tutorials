@@ -1,4 +1,4 @@
-Create a map with CartoDB.js
+Create a map with cartodb.js
 == 
 
 ##Summary
@@ -132,11 +132,23 @@ Next, let's change our CartoCSS style a bit. Just like SQL, you can set CartoCSS
 ```js
 var layerOptions = {
           query: "SELECT * FROM {{table_name}} where adm0_a3 = 'USA'",
-          tile_style: "#{{table_name}}{marker-fill: red} "
+          tile_style: "#{{table_name}}{marker-fill: red; marker-width: 14; marker-line-color: white; marker-line-width: 3;}"
 }
 ```
 
 Again, just like SQL, we used the {{table_name}} variable instead of writing it explicitly. Here, we are just going to set the markers to generic red color. Go ahead and save your template-1.html and reload it in the browser.
+
+## Adding a baselayer
+
+The black background looks okay, but if you want to add more context to your data, it helps to add a baselayer. In Google Maps, you are probably familiar with Street View and the Satallite layer. Since we are using Leaflet for our map here, we will instead use one of the great baselayers provided by MapBox. To do so, just add the following *before* the line where you assign the layerUrl.
+
+```js
+L.tileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {
+  attribution: 'MapBox'
+}).addTo(map);
+```
+
+Save your file. If you now refresh your map, you should see MapBox's street map rendered beneith your data. 
 
 Congratulations, you now have the basics for creating maps in your webpages. Check out the other tutorials for information on infowindows, click handlers, and some more advanced methods using cartodb.js.
 
