@@ -18,7 +18,8 @@
     var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2899/viz.json';
 
     var layerOptions = {
-              query: "SELECT * FROM {{table_name}} where adm0_a3 = 'USA'"
+              query: "SELECT * FROM {{table_name}} where adm0_a3 = 'USA'",
+              tile_style: "#{{table_name}}{marker-fill: red} "
     }
 
     cartodb.createLayer(map, layerUrl, layerOptions)

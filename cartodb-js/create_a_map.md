@@ -140,6 +140,8 @@ Again, just like SQL, we used the {{table_name}} variable instead of writing it 
 
 Congratulations, you now have the basics for creating maps in your webpages. Check out the other tutorials for information on infowindows, click handlers, and some more advanced methods using cartodb.js.
 
+Next - [Infowindows](./adding_infowindows.md)
+
 ## A note on cartodb.js and the content delivery network (CDNs)
 
 We've made cartodb.js available through a CDN for you to use. Linking to the CDN version of the library means you'll never have to host it locally and your site visitors will be able to load these files the fastest way possible. You can see these libraries being loaded on lines 3 and 4,
