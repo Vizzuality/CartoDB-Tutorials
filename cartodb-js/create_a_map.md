@@ -149,7 +149,7 @@ We've made cartodb.js available through a CDN for you to use. Linking to the CDN
 <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
 ```
 
-The first is a CSS file that will help you render both the map and other things such as infowindows. The second file is the library itself. Here, we are loading the most recent available version. You can find what that version is by [visiting the GitHub repo](https://github.com/CartoDB/cartodb.js) or by reading the first line in the uncompressed library, [http://libs.cartocdn.com/cartodb.js/v2/cartodb.js]](http://libs.cartocdn.com/cartodb.js/v2/cartodb.js). 
+The first is a CSS file that will help you render both the map and other things such as infowindows. The second file is the library itself. Here, we are loading the most recent available version. You can find what that version is by [visiting the GitHub repo](https://github.com/CartoDB/cartodb.js) or by reading the first line in the uncompressed library, [http://libs.cartocdn.com/cartodb.js/v2/cartodb.js](http://libs.cartocdn.com/cartodb.js/v2/cartodb.js). 
 
 If you are using the cartodb.js library on live and tested code, we recommend that you link directly to the version your code has been tested on. This will ensure that no changes we make in the future will disrupt your project. To do so, you simply add the specific version number to the URLs, as in,
 
