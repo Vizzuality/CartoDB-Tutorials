@@ -3,15 +3,15 @@ Create a map with cartodb.js
 
 ##Summary
 
-Here we are going to show you how to create a basic map of your CartoDB data using cartodb.js. We'll walk you through creating a map, using the Viz JSON link to your table, and customizing SQL and CartoCSS for your maps. 
+In this tutorial, we are going to show you how to create a basic map of your CartoDB data using cartodb.js. We'll walk you through creating a map, using the Viz JSON link to your table, and customizing SQL and CartoCSS for your maps. 
 
-CartoDB.js tutorials will all require some knowledge about coding, HTML, and Javascript. If you haven't had a chance to start learning some of these prerequisites, we recommend you browse Google or StackOverflow for some suggested reading and tutorials.
+CartoDB.js tutorials will require some knowledge about HTML, and Javascript. If you haven't had a chance to start learning some of these prerequisites, we recommend you browse Google or StackOverflow for some suggested reading and tutorials.
 
 ## Getting started
 
-I have provided a sample HTML document in the examples zipfile, [download it here](https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/cartodb-js/data/examples.zip), called template.html. Download the zipfile, make a copy of template.html and call it, tutorial-1.html. Now open this file in your webbrowser.
+I have provided a sample HTML document in the examples zipfile, [download it here](https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/cartodb-js/data/examples.zip), called template.html. Download the zipfile, make a copy of template.html and call it 'tutorial-1.html'. Now open this file in your web browser.
 
-What you should see is a blank, black, canvas. Success. Now, open tutorial-1.html in your code editor. Let's take a look at a couple important things.
+What you should see is a blank, black, canvas. Success! Now, open tutorial-1.html in your code editor. Let's take a look at a couple important things.
 
 ## Adding your first CartoDB layer
 
@@ -69,7 +69,7 @@ function init(){
 }
 ```
 
-Go ahead and save your tutorial-1.html file. Open it, or refresh it, in your browser. You should be greated by a great big green go light!
+Go ahead and save your tutorial-1.html file. Open it, or refresh it in your browser. You should be greeted by a great big green go light!
 
 ![go light](http://i.imgur.com/MVTrq.png)
 
@@ -81,7 +81,7 @@ For this tutorial, we are going to use the Populated Places dataset from natural
 
 #### Getting your map Viz JSON link
 
-Now that we have our data, it is time to swap out the big green go light with your own data. To do, stay within the table you just created and navigate to the Map tab, and click 'Share'. If your table is private it will ask you to make it public, do so. Click the 'API' link at the upper right of the window that pops-up.
+Now that we have our data, it is time to swap out the big green go light with your own data. To do so, within the table you just created in your CartoDB admin console navigate to the Map tab and click 'Share'. If your table is private it will ask you to make it public, do so. Click the 'API' link at the upper right of the window that pops-up.
 
 ![share](http://i.imgur.com/ZVg5C.png)
 
@@ -99,7 +99,7 @@ Go ahead and save your work, then refresh the tutorial-1.html page in your brows
 
 #### SQL
 
-You can define SQL from within your CartoDB dashboard for tables, but often it is handy to completely control the SQL run from within the code you are writing. Doing it with cartodb.js is simple, we are just going to pass options to cartodb.js when we initiate our layer. A nice and clean way to do it is to create a layerOptions object, just like we created our layerUrl, add this below the line where we create layerUrl,
+You can define SQL from within your CartoDB dashboard for tables, but often it is handy to completely control the SQL from within the code you are writing. Doing it with cartodb.js is simple, we are just going to pass options to cartodb.js when we initiate our layer. A nice and clean way to do it is to create a layerOptions object, just like we created our layerUrl, add this below the line where we create layerUrl,
 
 ```js
 var layerOptions = {
@@ -121,7 +121,7 @@ to now look like,
 cartodb.createLayer(map, layerUrl, layerOptions)
 ```
 
-Save your tutorial-1.html file and refresh your browser. Your map should now only be showing populated places in the United States.
+Save your tutorial-1.html file and refresh your browser. Your map should now only show populated places in the United States.
 
 ![usa populated places](http://i.imgur.com/MevCP.png)
 
@@ -140,7 +140,7 @@ Again, just like SQL, we used the {{table_name}} variable instead of writing it 
 
 ## Adding a baselayer
 
-The black background looks okay, but if you want to add more context to your data, it helps to add a baselayer. In Google Maps, you are probably familiar with Street View and the Satallite layer. Since we are using Leaflet for our map here, we will instead use one of the great baselayers provided by MapBox. To do so, just add the following *before* the line where you assign the layerUrl.
+The black background looks okay, but if you want to add more context to your data, it helps to add a baselayer. If you've used Google Maps, you are probably familiar with Street View, Terrain and the Satallite layer. Since we are using Leaflet for our map here, we will instead use one of the baselayers provided by MapBox. To do so, just add the following *before* the line where you assign the layerUrl.
 
 ```js
 L.tileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png', {
@@ -148,9 +148,9 @@ L.tileLayer('http://a.tiles.mapbox.com/v3/mapbox.mapbox-streets/{z}/{x}/{y}.png'
 }).addTo(map);
 ```
 
-Save your file. If you now refresh your map, you should see MapBox's street map rendered beneith your data. 
+Save your file. Now when you refresh your map, you should see MapBox's street map rendered beneith your data. 
 
-Congratulations, you now have the basics for creating maps in your webpages. Check out the other tutorials for information on infowindows, click handlers, and some more advanced methods using cartodb.js.
+Congratulations, you now have the basics for creating maps in your webpages. Check out the other tutorials for information on infowindows, click handlers, and some more advanced methods for using cartodb.js.
 
 Next - [Infowindows](./adding_infowindows.md)
 
@@ -163,7 +163,7 @@ We've made cartodb.js available through a CDN for you to use. Linking to the CDN
 <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
 ```
 
-The first is a CSS file that will help you render both the map and other things such as infowindows. The second file is the library itself. Here, we are loading the most recent available version. You can find what that version is by [visiting the GitHub repo](https://github.com/CartoDB/cartodb.js) or by reading the first line in the uncompressed library, [http://libs.cartocdn.com/cartodb.js/v2/cartodb.js](http://libs.cartocdn.com/cartodb.js/v2/cartodb.js). 
+The first is a CSS file that will help you render both the map and other things, such as infowindows. The second file is the library itself. Here, we are loading its most recent available version. You can find what that version is by [visiting the GitHub repo](https://github.com/CartoDB/cartodb.js) or by reading the first line in the uncompressed library, [http://libs.cartocdn.com/cartodb.js/v2/cartodb.js](http://libs.cartocdn.com/cartodb.js/v2/cartodb.js). 
 
 If you are using the cartodb.js library on live and tested code, we recommend that you link directly to the version your code has been tested on. This will ensure that no changes we make in the future will disrupt your project. To do so, you simply add the specific version number to the URLs, as in,
 
