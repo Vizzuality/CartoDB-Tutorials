@@ -85,7 +85,7 @@ for (var i = 0; i < data.total_rows; i++) {
 
 We are going to update the SQL statement we are running to query from our Populated Places table. In my case, the table I created is called, ne_10m_populated_pla. You can find the name of your newly created table either in your main CartoDB dashboard table list view, or within the table, by looking at its name in the upper-left hand corner of the page.
 
-![table name]()
+![table name](http://i.imgur.com/I8o7E.png)
 
 Now that you have the tablename, let's modify the query we are running. Before, where we ran,
 

@@ -12,7 +12,7 @@
 
   <script>
 function init(){
-  var sql = new cartodb.SQL({ user: 'viz2' });
+  var sql = new cartodb.SQL({ user: 'user_name' });
    sql.execute("SELECT * FROM ne_10m_populated_pla ORDER BY the_geom <-> ST_SetSRID(ST_MakePoint({{lon}},{{lat}}), 4326) LIMIT 25", {lon: -74.0064, lat: 40.7142})
       .done(function(data) {
         for (var i = 0; i < data.total_rows; i++) {
