@@ -1,0 +1,43 @@
+<html>
+<head>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
+	<script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+	<style>
+    html, body {padding: 0; margin: 0;}
+    #cartodb-map { width: 100%; height:100%; background: black;}
+	</style>
+	<script>
+  var map;
+  function init(){
+    // initiate leaflet map
+    map = new L.Map('cartodb-map', { 
+      center: [0,0],
+      zoom: 2
+    })
+
+    var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2971/viz.json';
+
+    cartodb.createLayer(map, layerUrl)
+     .on('done', function(layer) {
+      map.addLayer(layer);
+      layer.interaction.remove();
+      layer.interaction = null;
+    }).on('error', function() {
+      //log the error
+    });
+
+    var layer2Url = 'http://viz2.cartodb.com/api/v1/viz/2899/viz.json';
+
+    cartodb.createLayer(map, layer2Url)
+     .on('done', function(layer) {
+      map.addLayer(layer);
+    }).on('error', function() {
+      //log the error
+    });
+  }
+	</script>
+</head>
+<body onload="init()">
+  <div id='cartodb-map'></div>
+</body>
+</html>
