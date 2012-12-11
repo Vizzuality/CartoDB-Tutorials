@@ -3,20 +3,19 @@ Custom interactivity using your cartodb.js maps
 
 ##Summary
 
-If you have the basics of making maps with cartodb.js mastered, then now it is time to start doing more interesting things with them. Here we will show you how to register click events to data on your maps and then how to create infowindows using click-events and data contained in your CartoDB tables.
+If you have mastered the basics of making maps with cartodb.js, it's now time to start doing more interesting things. Here we will show you how to register click events to data on your maps, and then how to create infowindows using click-events and data contained in your CartoDB tables.
 
 ## Getting started
 
-In the last tutorial we built a basic map of points. You can continue this tutorial using the same file you were developing last time. If you skipped that tutorial, you can use the tutorial-1-finished.html file contained in the [examples.zip file](https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/cartodb-js/data/examples.zip). Whichever way you get started, make a copy of your file and call it tutorial-2.html. This new file will be the one we use for the rest of this tutorial. 
-
+In the last tutorial we built a basic point map. You can continue this tutorial using the same file we developed last time. If you skipped that tutorial, you can use the tutorial-1-finished.html file contained in the [examples.zip file](https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/cartodb-js/data/examples.zip). Whichever way you get started, make a copy of your file and call it tutorial-2.html. This new file will be the one we use for the rest of this tutorial. 
 
 ## Custom infowindows 
 
-If you click on any of the dots in your map, you may find that infowindows are alredy drawn. Infowindows can be set in your CartoDB dashboard and are passed through the Viz JSON. If you don't want the ones set on CartoDB you can easily create custom infowindows. The cartodb.js library has some nice shortcuts to help you make infowindows painlessly. Once you have the basic HTML for the content of your infowindow defined, the rest is a breeze. 
+If you click on any of the dots on your map, you may find that infowindows are alredy drawn. Infowindows can be set in your CartoDB dashboard and are passed through the Viz JSON. If you don't want the ones set on CartoDB you can easily create custom ones. The cartodb.js library comes with shortcuts to help you design your own infowindows painlessly. Once you have the basic HTML for the content of your infowindow defined, the rest is a breeze. 
 
 #### Infowindow templates
 
-A common way to define the content is through the use of templates. For a discussion of how or why these are used, we suggest reading over this [Stack Overflow](http://stackoverflow.com/questions/4912586/explanation-of-script-type-text-template-script) exchange and some of the links it contains. For now, you'll need to add a template to your tutorial-2.html file. Add the follow directly below the closing ```</style>``` tag,
+A common way to define the content is through the use of templates. For a discussion of how or why these are used, we suggest reading over this [Stack Overflow](http://stackoverflow.com/questions/4912586/explanation-of-script-type-text-template-script) exchange and some of the links within the post. For now, you'll need to add a template to your tutorial-2.html file. Add the following directly below the closing ```</style>``` tag,
 
 ```html
 <script type="infowindow/html" id="infowindow_template">
@@ -37,23 +36,23 @@ A common way to define the content is through the use of templates. For a discus
 </script>
 ```
 
-This is basically HTML stored in a ```<script>``` tag. It also has a template value, ```{{content.data.name}}```. Just like how we used {{table_name}} in the previous tutorial, this value will be swapped out by values from the objects we click in our maps. You could use any HTML markup for your infowindows, but you'll have to be sure to define the CSS for how they will look. The HTML used here is designed to use CSS contained in the cartodb.css file we include in our file. 
+This is basically HTML stored in a ```<script>``` tag. It also has a template value, ```{{content.data.name}}```. Just like how we used {{table_name}} in the previous tutorial, this value will be swapped out by values from the objects we click in our maps. You can use any HTML markup for your infowindows, but you'll have to define the CSS for how it will look. The HTML used here is designed to use CSS contained inside the cartodb.css file we include. 
 
 #### Passing templates to cartodb.js layers
 
-Next we'll need to tell our later to use our custom template for infowindows. It only takes a single line. Within the code where we define our CartoDB layer, locate the ```map.addLayer(layer)``` line. Directly below that line add the following,
+Next we'll need to tell our layer to use our custom template for infowindows. It only takes a single line. Within the code where we define our CartoDB layer, locate the ```map.addLayer(layer)``` line. Directly below that line add the following,
 
 ```js
 layer.infowindow.set('template', $('#infowindow_template').html());
 ```
 
-This is pulling the HTML template we created above and passing it to the layer for use. If you now save your tutorial-2.html file and refresh the page, you should see your new infowindows.
+This is pulling the HTML template we created above and passing it to the layer for use. Save your tutorial-2.html file and refresh the page, you should see your new infowindows.
 
 ![custom infowindow](http://i.imgur.com/6uCQd.png)
 
 ## Registering click events
 
-With CartoDB maps, and many others mapping tools, interactivity is very important. In CartoDB maps, we handle it by using click events, so when a object on your map is clicked, we can perform some action. In cartodb.js you can add click events at the same time you create your new CartoDB layer. Change the createLayer portion of the code from this,
+With CartoDB maps, and many others mapping tools, interactivity is very important. In CartoDB maps, we handle it by using click events, so when a object on your map is clicked, we perform an action. In cartodb.js you can add click events at the same time you create your new CartoDB layer. Change the createLayer portion of the code from this,
 
 ```js
 cartodb.createLayer(map, layerUrl, layerOptions)
@@ -78,6 +77,6 @@ cartodb.createLayer(map, layerUrl, layerOptions)
 });
 ```
 
-Now, when you save the file and refresh your map, you should find that an alert is issued if you click one of our red dots. You might also notice that an infowindow is drawn after you close the alert. Instead of doing an alert here you could load new page content, redirct to user to a different page, or a whole range of functions. 
+Save the file and refresh your map, you should find that an alert is issued if you click one of our red dots. You might also notice that an infowindow is drawn after you close the alert. Instead of loading an alert, you could load new page content, redirct a user to a different page, or add any range of functions. 
 
 
