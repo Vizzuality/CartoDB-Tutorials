@@ -139,7 +139,7 @@ We still need to run the ```updateQuery``` function. To do so, let's update our 
 
 Simple! Now, save your file and reload it in your browser again. You should see something like this,
 
-[working](http://i.imgur.com/dhkAr.png)
+![working](http://i.imgur.com/dhkAr.png)
 
 ## Wiring up click events
 
@@ -201,5 +201,5 @@ The above updates our layer with new SQL asking only for points where ```megacit
 
 Another way to toggle layers is to load two layers at the same time and then use ```layer.show()``` and ```layer.hide()``` functions to add and remove them from the map. This is best used if you have multiple datasets on the same map.
 
-[final](http://i.imgur.com/8F9Dc.png)
+![final](http://i.imgur.com/8F9Dc.png)
 
