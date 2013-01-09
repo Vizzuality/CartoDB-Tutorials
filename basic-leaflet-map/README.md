@@ -11,7 +11,7 @@ To see the final application, go here,
 
 ## Data sources
 
-#####United States county borders
+##### United States county borders
 
   - http://www.census.gov/geo/www/cob/co2000.html
 
@@ -23,9 +23,24 @@ To see the final application, go here,
 
   - Export the data, [http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/youth_by_county.csv.zip](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/youth_by_county.csv.zip)
 
-##Building the map
+## Fixing shapefiles without .PRJ files
 
-###Upload your data
+CartoDB needs a .prj file with your shapefile imports. Sometimes, data providers leave them out of the files you download. Take for example the ```co99_d00_shp.zip``` file you just downloaded. Unzip the file and take a look in the directory that is created. You may notice that there is no file with a .prj extension. This is a problem. Often times, this can make the file pretty unusable. One way to try and fix it is to put a .prj file into the directory that contains a generic (i.e. high probability of being used) projection, WGS84. Let's do that with this data file.
+
+ - Download a .prj here, 
+
+ - Move the file generic_wgs84.prj into the directory containing all the other files of your shapefile
+
+ - You must name the file the same as the others, so in this case rename it to ```co99_d00.prj```
+
+ - Zip all the files back together
+
+Great, now assuming the data in co99_d00 is actually WGS84, it should upload and work fine!
+
+
+## Building the map
+
+### Upload your data
 
 1. You can drag both of the files you just downloaded directly onto your CartoDB admin page. From there, they will be uploaded and you should be given tables. 
 2. After each of the files is uploaded, be sure that we are all using the same table names, rename the table of your county outlines to "usa_counties" and rename your youth jailed data to "youth_jailed".
