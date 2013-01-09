@@ -27,7 +27,9 @@ To see the final application, go here,
 
 CartoDB needs a .prj file with your shapefile imports. Sometimes, data providers leave them out of the files you download. Take for example the ```co99_d00_shp.zip``` file you just downloaded. Unzip the file and take a look in the directory that is created. You may notice that there is no file with a .prj extension. This is a problem. Often times, this can make the file pretty unusable. One way to try and fix it is to put a .prj file into the directory that contains a generic (i.e. high probability of being used) projection, WGS84. Let's do that with this data file.
 
- - Download a .prj here, 
+ - Download a .prj here, https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/basic-leaflet-map/data/generic_wgs84.prj
+
+ - If it doesn't download staight away, right click it and Save As and save it to your computer
 
  - Move the file generic_wgs84.prj into the directory containing all the other files of your shapefile
 
@@ -42,7 +44,7 @@ Great, now assuming the data in co99_d00 is actually WGS84, it should upload and
 
 ### Upload your data
 
-1. You can drag both of the files you just downloaded directly onto your CartoDB admin page. From there, they will be uploaded and you should be given tables. 
+1. You can drag both of the files you just downloaded (one being the fixed version containing a .PRJ file) directly onto your CartoDB admin page. From there, they will be uploaded and you should be given tables. 
 2. After each of the files is uploaded, be sure that we are all using the same table names, rename the table of your county outlines to "usa_counties" and rename your youth jailed data to "youth_jailed".
 3. Go to the Map tab in the usa_counties table and play around with some of the styling options.
 
