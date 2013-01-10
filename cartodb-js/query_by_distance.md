@@ -157,49 +157,4 @@ We only need to do two things, update our ```total``` variable based on the butt
 
 That's it! Save your file again and refresh your browser. You should now find that your four buttons are active. If you click 100 you will find the nearest 1000 populated places to you. 
 
-```js
-   LayerActions[$(this).attr('id')]();
-```
-
-The above is looking for an object with elements named the same as our button IDs. This is a handy way for storing our instructions for each button. Let's add the LayerActions object,
-
-```js
-    var LayerActions = {
-      all: function(){
-          layers[0].setQuery("SELECT * FROM {{table_name}}");
-          return true;
-        },
-      capitals: function(){
-          layers[0].setQuery("SELECT * FROM {{table_name}} WHERE featurecla = 'Admin-0 capital'");
-          return true;
-        },
-      megacities: function(){
-          layers[0].setQuery("SELECT * FROM {{table_name}} WHERE megacity = 1");
-          return true;
-        }
-    }
-```
-
-Add the above to your code, save it, and refresh your map. You should now see that the buttons are working to update your map. But why?
-
-## Toggling functions
-
-There are a few ways to toggle data using CartoDB.js. If you are using a single table, one of the easiest ways is to just update the SQL or CartoCSS of the layer already in view. That is waht we do with the ```LayerActions``` functions above. When the button, ```Megacities``` is clicked, we run the following,
-
-```js
-   layers[0].setQuery("SELECT * FROM {{table_name}} WHERE megacity = 1");
-```
-
-The above updates our layer with new SQL asking only for points where ```megacity= = 1```. We could also use ```setCartoCSS``` to update a style, or if we need to update both at the same time we could do something like the following,
-
-```js
-   layers[0].setOptions({
-      query: "SELECT * FROM {{table_name}} WHERE megacity = 1",
-      tile_style: "#{{table_name}}{ marker-fill: black; }"
-    });
-```
-
-Another way to toggle layers is to load two layers at the same time and then use ```layer.show()``` and ```layer.hide()``` functions to add and remove them from the map. This is best used if you have multiple datasets on the same map.
-
-![final](http://i.imgur.com/8F9Dc.png)
 
