@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>Easy earthquakes</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+    <style type="text/css">
+ 
+    body{
+        background:white;
+    }
+    svg {
+      width: 960px;
+      height: 500px;
+    }
+    svg:active {
+      cursor: move;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+    circle {
+      fill: none;
+      stroke-width: 1.5px;
+    }
+    #first_layer path {
+      fill-opacity:0.8;
+      fill: none;
+      stroke: black;
+      stroke-width:0.5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+ 
+    </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+ 
+    var first_layer = 'd3_world_borders';
+    var earthquake_layer = 'earthquake_jsgeo_copy';
+
+    var sql = new cartodb.SQL({ user: 'viz2', format: 'geojson', dp: 5});
+ 
+    // Define our SVG element outside our SQL functions
+    var svg = d3.select("body")
+            .append("svg")
+            .call(d3.behavior.zoom()
+                .on("zoom", redraw))
+            .append("g");
+ 
+    // Our projection.
+    var xy = d3.geo.mercator();
+        xy.scale(1500);
+        xy.center([-90,30]);
+        xy.precision(0);
+        
+    svg.append("g").attr("id", "first_layer");
+    svg.append("g").attr("id", "second_layer");
+ 
+    var path = d3.geo.path();
+    
+    sql.execute("SELECT ST_Simplify(the_geom,0.01) as the_geom FROM {{table_name}} WHERE the_geom IS NOT NULL", {table_name: first_layer})
+      .done(function(collection) {
+          svg.select("#first_layer")
+            .selectAll("path")
+              .data(collection.features)
+            .enter().append("path")
+            .attr("d", path.projection(xy));
+      })
+      .error(function(errors) {
+        // console.log('Errors! Oh no!')
+      });
+ 
+    var earthquakes;
+    sql.execute("SELECT the_geom, quakedate, magnitude FROM {{table_name}} WHERE the_geom IS NOT NULL ORDER BY quakedate ASC", {table_name: earthquake_layer})
+      .done(function(collection) {
+        earthquakes = collection.features;
+      svg.select("#second_layer")
+        .selectAll("circle")
+        .data(collection.features)
+        .enter()
+          .append("circle")
+          .attr("cx", function(d) { return xy(d.geometry.coordinates)[0] })
+          .attr("cy", function(d) { return xy(d.geometry.coordinates)[1] })
+          .attr("r", function(d) { return d.properties.magnitude * 5 })
+          .style("fill", "red")
+          .style("fill-opacity", 0.2)
+          .style("stroke", "red")
+          .style("stroke-opacity", 0.2)
+      });
+ 
+    function redraw() {
+      svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+ 
+    </script>
+  </body>
+</html>

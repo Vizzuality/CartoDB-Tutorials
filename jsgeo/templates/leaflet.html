@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Example leaflet map</title>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
+  <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+  <style type='text/css'>
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0; padding: 0;
+      background: black;
+    }
+    #map{
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+  <body >
+    <div id="map"></div>
+    <script>
+      // initiate leaflet map
+      var map = new L.Map('map', { 
+        center: [38.27,-88.24],
+        zoom: 4
+      })
+
+      L.tileLayer('https://dnv9my2eseobd.cloudfront.net/v3/cartodb.map-4xtxp73f/{z}/{x}/{y}.png', {
+        attribution: 'MapBox'
+      }).addTo(map);
+
+      var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2899/viz.json';
+
+      var layerOptions = {
+            query: "SELECT * FROM {{table_name}}",
+            tile_style: "#{{table_name}}{marker-fill: red;} "
+      }
+
+      cartodb.createLayer(map, layerUrl, layerOptions)
+       .on('done', function(layer) {
+        map.addLayer(layer);
+      }).on('error', function() {
+        //log the error
+      });
+    </script>
+  </body>
+</html>
