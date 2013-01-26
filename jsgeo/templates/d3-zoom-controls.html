@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>U.S. States</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+    <style type="text/css">
+
+    body{
+        background:white;
+        margin: 0; padding: 0;
+    }
+    svg {
+      width: 960px;
+      height: 500px;
+      background: #4a8dcb;
+    }
+    svg:active {
+      cursor: move;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+    #world_borders path {
+      fill-opacity:0.8;
+      fill: #222;
+      stroke: #ddd;
+      stroke-width:0.5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #data_layer circle {
+      cursor: pointer;
+      fill-opacity:1;
+      fill: white;
+      stroke-width:0.1px;
+      stroke:black;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    </style>
+  </head>
+  <body>
+  </body>
+
+    <script type="text/javascript">
+    var w = 960, h = 500, v = 1, label;
+
+    var world_borders = 'd3_world_borders';
+    var data_layer = 'd3_populated_places';
+
+    var sql = new cartodb.SQL({ user: 'viz2', format: 'geojson', dp: 5});
+
+    var zoom = d3.behavior.zoom();
+    // Define our SVG element outside our SQL functions
+    var svg = d3.select("body")
+            .append("svg")
+            .call(zoom
+                .on("zoom", redraw))
+            .append('g');
+
+    svg.append("foreignObject")
+    .attr("class","leaflet-styles")
+    .attr("width",w)
+    .attr("height",h)
+    .append("xhtml:div")
+    .html('<div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in"></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out"></a></div></div>');
+
+    svg.select(".leaflet-control-zoom-in")
+      .on("mousedown", function(e){
+        var event = e || window.event;
+        event.stopPropagation()
+        var t = zoom.translate();
+        var c = xy.center();
+        //zoom.translate([0, 0]).scale(1). 
+        console.log(zoom.translate())
+      zoom.scale(zoom.scale()*1.5);
+      var xo = w * zoom.scale();
+          xo = zoom.translate()[0]/4 - (xo - w)/2
+      var yo = h * zoom.scale();
+          yo = zoom.translate()[1]/4 - (yo - h)/2
+      zoom.translate([xo, yo])
+        console.log(zoom.translate())
+      svg.attr("transform", "translate(" + [xo, yo] + ")scale(" + zoom.scale() + ")");
+      xy.center(c)
+      })
+    svg.select(".leaflet-control-zoom-out")
+      .on("mousedown", function(e){
+        var event = e || window.event;
+        event.stopPropagation()
+        var t = zoom.translate();
+        var c = xy.center();
+        //zoom.translate([0, 0]).scale(1). 
+        console.log(zoom.translate())
+      zoom.scale(zoom.scale()*0.75);
+      var xo = w * zoom.scale();
+          xo = zoom.translate()[0]/4 - (xo - w)/2
+      var yo = h * zoom.scale();
+          yo = zoom.translate()[1]/4 - (yo - h)/2
+      zoom.translate([xo, yo])
+        console.log(zoom.translate())
+      svg.attr("transform", "translate(" + [xo, yo] + ")scale(" + zoom.scale() + ")");
+      xy.center(c)
+      })
+      // .call(d3.behavior.zoom()
+      //     .on("zoom", redraw));
+
+    var g = svg.append("g");
+
+    // Our projection.
+    var xy = d3.geo.mercator().scale(5);
+        xy.scale(2500);
+        xy.center([40,30]);
+
+    g.append("g").attr("id", "world_borders");
+    g.append("g").attr("id", "data_layer");
+
+
+    var path = d3.geo.path();
+
+    //Setup a vector basemap from world borders
+    sql.execute("SELECT ST_Simplify(the_geom,0.01) as the_geom FROM {{table_name}} WHERE the_geom IS NOT NULL", {table_name: world_borders})
+      .done(function(collection) {
+          svg.select("#world_borders")
+            .selectAll("path")
+              .data(collection.features)
+            .enter().append("path")
+            .attr("d", path.projection(xy));
+      })
+      .error(function(errors) {
+        // console.log('Errors! Oh no!')
+      });
+
+
+      sql.execute("SELECT cartodb_id, the_geom, 4/sqrt(scalerank) as pop FROM {{table_name}} WHERE the_geom IS NOT NULL AND pop_max > 10^5", {table_name: data_layer})
+        .done(function(collection) {
+
+
+        svg.select("#data_layer")
+          .selectAll("path")
+          .data(collection.features)
+          .enter()
+          .append("circle")
+          .attr("r", function(d){ return d.properties.pop })
+          .attr("cy", function(d){ return xy(d.geometry.coordinates)[1] })
+          .attr("cx", function(d){ return xy(d.geometry.coordinates)[0] })
+          .attr("d", path.projection(xy))
+        })
+        .error(function(errors) {
+          // console.log('Errors! Oh no!')
+        });
+
+
+    function redraw() {
+      console.log(d3.event.scale)
+      console.log(d3.event.translate)
+      scale = d3.event.scale;
+      svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
+    </script>
+</html>

@@ -31,14 +31,14 @@
         attribution: 'MapBox'
       }).addTo(map);
 
-      var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/2899/viz.json';
+      var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/3055/viz.json';
 
       var layerOptions = {
-            query: "SELECT * FROM {{table_name}}",
+            query: "SELECT * FROM {{table_name}} WHERE magnitude > 5.0",
             tile_style: "#{{table_name}}{marker-fill: red;} "
       }
 
-      cartodb.createLayer(map, layerUrl, layerOptions)
+      cartodb.createLayer(map, layerUrl)
        .on('done', function(layer) {
         map.addLayer(layer);
       }).on('error', function() {

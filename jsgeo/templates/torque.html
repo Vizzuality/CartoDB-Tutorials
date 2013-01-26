@@ -19,9 +19,9 @@
     var gui;
     function initialize() {
 
-        var user_name = "";
-        var table_name = "";
-        var column_name = "";
+        var user_name = "viz2";
+        var table_name = "earthquake_jsgeo_2";
+        var column_name = "datetime";
 
         // initialise the google map
         var map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -72,7 +72,7 @@
             table: table_name,
             column: column_name,
             cumulative: true,
-            resolution: 2,
+            resolution: 8,
             steps: 400,
             fps: 24,
             fitbounds: false,

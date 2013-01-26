@@ -1,0 +1,169 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <title>U.S. States</title>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v2/themes/css/cartodb.css" />
+    <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+    <style type="text/css">
+
+    body{
+        background:white;
+        margin: 0; padding: 0;
+    }
+    svg {
+      width: 960px;
+      height: 500px;
+      background: #4a8dcb;
+    }
+    svg:active {
+      cursor: move;
+      cursor: -moz-grabbing;
+      cursor: -webkit-grabbing;
+    }
+    #world_borders path {
+      fill-opacity:0.8;
+      fill: #222;
+      stroke: #ddd;
+      stroke-width:0.5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #data_layer circle {
+      cursor: pointer;
+      fill-opacity:1;
+      fill: white;
+      stroke-width:0.1px;
+      stroke:black;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    #infowindow_template {
+      position: relative;
+    }
+    </style>
+  </head>
+  <body>
+  </body>
+
+  <script type="infowindow/html" id="infowindow_template">
+    <div class="cartodb-popup">
+
+      <a href="#close" class="cartodb-popup-close-button close">x</a>
+
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-content">
+           <img style="width: 100%" src="http://rambo.webcindario.com/images/18447755.jpg"></src>
+           <!-- content.data contains the field info -->
+           <h4>{{name}}</h4>
+         </div>
+       </div>
+       <div class="cartodb-popup-tip-container"></div>
+    </div>
+  </script>
+
+    <script type="text/javascript">
+    var w = 960, h = 500, label;
+
+    var world_borders = 'd3_world_borders';
+    var data_layer = 'd3_populated_places';
+
+    var sql = new cartodb.SQL({ user: 'viz2', format: 'geojson', dp: 5});
+
+    // Define our SVG element outside our SQL functions
+    var svg = d3.select("body")
+            .append("svg")
+            .call(d3.behavior.zoom()
+                .on("zoom", redraw))
+            .append('g');
+
+    // svg.append("svg:foreignObject")
+    // .attr("class","leaflet-styles")
+    // .attr("width",w)
+    // .attr("height",h)
+    // .append("xhtml:div")
+    // .html('<div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in"></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out"></a></div></div>');
+
+    // d3.select("svg:foreignObject")
+    //   .selectAll(".leaflet-control-zoom-in")
+    //   .call(d3.behavior.zoom()
+    //       .on("zoom", redraw));
+
+    svg.on("mousedown", function(t){
+        console.log('remove')
+        //d3.selectAll(".infowindow").remove(); 
+        label.selectAll('g').remove()
+      })
+
+    var g = svg.append("g");
+
+    // Our projection.
+    var xy = d3.geo.mercator().scale(5);
+        xy.scale(2500);
+        xy.center([40,30]);
+
+    g.append("g").attr("id", "world_borders");
+    g.append("g").attr("id", "data_layer");
+    g.append("g").attr("id", "label");
+
+
+    var path = d3.geo.path();
+
+    //Setup a vector basemap from world borders
+    sql.execute("SELECT ST_Simplify(the_geom,0.01) as the_geom FROM {{table_name}} WHERE the_geom IS NOT NULL", {table_name: world_borders})
+      .done(function(collection) {
+          svg.select("#world_borders")
+            .selectAll("path")
+              .data(collection.features)
+            .enter().append("path")
+            .attr("d", path.projection(xy));
+      })
+      .error(function(errors) {
+        // console.log('Errors! Oh no!')
+      });
+
+
+      sql.execute("SELECT cartodb_id, the_geom, 4/sqrt(scalerank) as pop FROM {{table_name}} WHERE the_geom IS NOT NULL AND pop_max > 10^5", {table_name: data_layer})
+        .done(function(collection) {
+
+
+        svg.select("#data_layer")
+          .selectAll("path")
+          .data(collection.features)
+          .enter()
+          .append("circle")
+          .attr("r", function(d){ return d.properties.pop })
+          .attr("cy", function(d){ return xy(d.geometry.coordinates)[1] })
+          .attr("cx", function(d){ return xy(d.geometry.coordinates)[0] })
+          .attr("d", path.projection(xy))
+          .on("mousedown", function(t){
+            sql.execute("SELECT * FROM {{table_name}} WHERE cartodb_id = {{cdb_id}}", {table_name: data_layer, cdb_id: t.properties.cartodb_id})
+              .done(function(data){
+                var d = data.features[0];
+                svg.select("#label")
+                .append("foreignObject")
+                .attr("class","infowindow")
+                .attr("y", xy(d.geometry.coordinates)[1])
+                .attr("x", xy(d.geometry.coordinates)[0])
+                .append("xhtml:div")
+                .html(Mustache.render($('#infowindow_template').html(), {name: d.properties.name}))
+                //TODO
+                // add movement to foreignObject on pan/zoom
+              })
+          })
+        })
+        .error(function(errors) {
+          // console.log('Errors! Oh no!')
+        });
+
+
+    function redraw() {
+      //label.selectAll('g').attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+      // label.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+      svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    }
+
+    </script>
+</html>
