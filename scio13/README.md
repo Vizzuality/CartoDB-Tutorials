@@ -131,5 +131,61 @@ From here, you can choose the look and feel of your map. In the small overview m
 
 Good work!
 
+# Bonus
+
+Download a template HTML index file here,
+
+[HTML Template](https://raw.github.com/Vizzuality/CartoDB-Tutorials/master/scio13/data/index.html.zip)
+
+Unzip the file locally. Next, drag the index.html file to your web-browser. It should open up a webpage with a blank map. Great!
+
+Next, open the file in a code editor of choice. Any basic text editor will work, more complex document editors such as Word will not.
+
+### Basic CartoDB.js intro
+
+This is a template for a basic webpage plus infowindows. You need to do a couple of things to make this work with the map you just created. The first, is you need to go back to your map on CartoDB. Click 'share', and then select the 'API' option in the upper right. This will give you the URL to your layer to use in the html. 
+
+Now, go down to line 58 in the index.html file, it should look like this,
+
+    var layerUrl = "";
+
+Add your URL to this variable, so now it should look something like this,
 
 
+    var layerUrl = 'http://viz2.cartodb.com/api/v1/viz/3104/viz.json';
+
+This Viz JSON tells the webpage how to load your layer. Go ahead and save the file. Reload it in your webpage. Congrats, you should have your data on the map!
+
+Now, if you want the infowindows to work, head back to your map on your CartoDB account. Click the infowindow button to the right of the map (3rd one down). Scroll to the very bottom and click the toggle button to turn all fields on. Now, go back to index.html in your web browser and refresh. Now, click any country and take a look. This is a very basic example I did using the values from your infowindow to actually construct graphs, you can do whatever you want here by using the templating method in the file. 
+
+### Infowindow templates
+
+The infowindow in index.html is defined in this portion of the document,
+
+```html
+  <script type="infowindow/html" id="infowindow_template">
+    <div class="cartodb-popup">
+
+      <a href="#close" class="cartodb-popup-close-button close">x</a>
+
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-content">
+           <h3>{{content.data.name}}</h3>
+           <p>
+           <img style="width: 100%" src="http://chart.apis.google.com/chart?cht=bhg&chs=550x230&chd=t:{{content.data.f_1990}},{{content.data.f_2000}},{{content.data.f_2005}},{{content.data.f_2010}}&chxt=x,y&chxl=1:|1990|2000|2005|2010&chxr=0,0,{{content.data.f_1990}}&chds=0,{{content.data.f_1990}}&chco=4D89F9&chbh=35,0,15&chg=8.33,0,5,5"></src>
+           </p>
+           <!-- content.data contains the field info -->
+         </div>
+       </div>
+       <div class="cartodb-popup-tip-container"></div>
+    </div>
+  </script>
+```
+
+Besides the ```<script>``` portions, you can edit this just like it is HTML to render however you like. In combination with CSS and JS you can do tons here. You can see for example, that I'm using the old Google Charts Static API (now depricated, don't get used to using it!), and dropping in values from CartoDB on the fly, those values are added to the string anywhere you see the {{ }} double-curly around text. So for example,
+
+    {{content.data.f_1990}}
+
+Is where I swap in the f_1990 value. Play around, have fun. Lots more tutorials are in this github repository and our supported ones can be found over [on the developers site](http://developers.cartodb.com/tutorials.html)
+
+:)

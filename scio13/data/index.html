@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="http://libs.cartodb.com/cartodb.js/v2/themes/css/cartodb.css" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://libs.cartodb.com/cartodb.js/v2/themes/css/cartodb.ie.css" />
+    <![endif]-->
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+  </head>
+    
+  <body>
+    <div id="map"></div>
+  </body>
+  <script type="infowindow/html" id="infowindow_template">
+    <div class="cartodb-popup">
+
+      <a href="#close" class="cartodb-popup-close-button close">x</a>
+
+       <div class="cartodb-popup-content-wrapper">
+         <div class="cartodb-popup-content">
+           <h3>{{content.data.name}}</h3>
+           <p>
+           <img style="width: 100%" src="http://chart.apis.google.com/chart?cht=bhg&chs=550x230&chd=t:{{content.data.f_1990}},{{content.data.f_2000}},{{content.data.f_2005}},{{content.data.f_2010}}&chxt=x,y&chxl=1:|1990|2000|2005|2010&chxr=0,0,{{content.data.f_1990}}&chds=0,{{content.data.f_1990}}&chco=4D89F9&chbh=35,0,15&chg=8.33,0,5,5"></src>
+           </p>
+           <!-- content.data contains the field info -->
+         </div>
+       </div>
+       <div class="cartodb-popup-tip-container"></div>
+    </div>
+  </script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v2/cartodb.js"></script>
+  <script>
+
+    function main() {
+
+      var map = L.map('map', { 
+        zoomControl: false,
+        center: [30, 0],
+        zoom: 2
+      })
+
+      // add a nice baselayer from Nokia
+      L.tileLayer('https://maps.nlp.nokia.com/maptiler/v2/maptile/newest/normal.day.grey/{z}/{x}/{y}/256/png8?lg=eng&token=61YWYROufLu_f8ylE0vn0Q&app_id=qIWDkliFCtLntLma2e6O', {
+        attribution: 'Nokia'
+      }).addTo(map);
+
+
+      var layerOptions = {
+          infowindow: true
+      }
+
+      var layerUrl = "";
+
+      cartodb.createLayer(map, layerUrl)
+       .on('done', function(layer) {
+
+        map.addLayer(layer);
+
+        layer.infowindow.set('template', $('#infowindow_template').html());
+
+        layer.on('error', function(err) {
+          console.log('error: ' + err);
+        });
+
+      }).on('error', function() {
+        console.log("some error occurred");
+      });
+
+    }
+
+    window.onload = main;
+
+  </script>
+
+</html>
