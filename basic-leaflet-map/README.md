@@ -1,3 +1,6 @@
+## this tutorial uses the OLD libraries, it isn't recommended to do it this way anymore!
+
+
 Building a basic Leaflet map using [CartoDB](http://cartodb.com)
 == 
 
