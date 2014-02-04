@@ -4,9 +4,9 @@
 Building a basic Leaflet map using [CartoDB](http://cartodb.com)
 == 
 
-This tutorial will walk you through a set of basic steps to build an leaflet map using CartoDB. 
+This tutorial will walk you through a set of basic steps to build a leaflet map using CartoDB. 
 
-Keep in mind that this tutorial was built for users with paid accounts. Free accounts will not have enough space to use the full United States counties shapefile mentioned below.
+Keep in mind that this tutorial was built for users with paid accounts. Free accounts will not have enough storage space to use the full United States counties shapefile mentioned below.
 
 To see the final application, go here,
 
@@ -68,7 +68,7 @@ Great, now assuming the data in co99_d00 is actually WGS84, it should upload and
 3. For me, the column is called "__of_juvenile_inmates_reported_in_most_recent_survey" and I don't want to ever type that again, so I'll change the name. Double click the name of your column, in the input field type the new name, "total".
 4. Below our column now named "total" click the text that says "string" and change the column type to "number".
 5. Finally, we will want to join our two tables based on their geometry. However, our youth_jailed table failed to automatically detect the latitude and longitude columns. Click the "georeference" button at the top right. For a longitude column select "longitude_generated" and for a latitude column select "latitude_generated" then click "Georeference".
-6. BE SURE that the tables you plan on building into applications are "Public" tables in your CartoDB account, if they are not, change them.
+6. BE SURE that the tables you plan on building into applications are "Public" tables in your CartoDB account, if they are not, change them by clicking on "Private" and selecting "Public".
 
 ###Basic SQL
 
@@ -85,7 +85,7 @@ You may notice in the last query that "MT" has no value in the sum column result
     
 ###Merge two tables
 
-You will very often want to JOIN data from two tables. In this case, we want to know the county outline stored in our usa_counties table and the count of youth in our youth_jailed table.
+Quite often you'll want to JOIN data from two tables. In this case, we want to know the county outline stored in our usa_counties table and the count of youth in our youth_jailed table.
 
 Click at the bottom left "SQL" In the window that appears, run the SQL statement below and take a look at the results.
 
@@ -101,7 +101,7 @@ Click at the bottom left "SQL" In the window that appears, run the SQL statement
     GROUP BY 
       usa_counties.name
 
-Unlike the previous SQL statements we played with, you'll notice that this statement keeps repeating the table names, like, youth_jailed.something. This is so that columns between the tables are confused, and is only required when the tables we are querying at the same time both have a column named the same thing. In this case, it was needed for "the_geom", which does exist in both. 
+Unlike the previous SQL statements we played with, you'll notice that this statement keeps repeating the table names, like, youth_jailed.something. This is so that if the columns in your tables are named the same, you'll not be querying the wrong table. In this case, it was needed for "the_geom", which exists on both. 
 
 ###Updating your table
 
@@ -132,7 +132,7 @@ Finally, you may notice that this leaves a lot of your columns (counties) withou
 
 ###Make a new choropleth
 
-Just like you did before, change the style of your usa_counties table. Set it to a choropleth based on this new column that we just created, "total_youth". You should have something like this now, don't mind the gray,
+Just like you did before, change the style of your usa_counties table. Set it to a choropleth referencing the new column that we just created, "total_youth". You should have something like this below image, don't mind the gray,
 
 ![new choropleth](http://i.imgur.com/e8NMw.png)
 
@@ -164,7 +164,7 @@ To remove the gray, let's change the Carto style a bit. Click "Carto" at the bot
        }
     }
 
-This just cleans up the style a bit, and makes it so only colors are applied to polygons with jailed_youth>=1 and all others are set to "transparent". Now we have a good looking map. Lets create an HTML page to show it.
+This just cleans up the style a bit, and makes it so only colors are applied to polygons with jailed_youth>=1 and all others are set to "transparent". Now, lets create an HTML page to show it.
 
 ###Getting started
 
@@ -172,20 +172,19 @@ You can download the basic starting page from
 
 [http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/index.html.zip](http://vizzuality.github.com/CartoDB-Tutorials/basic-leaflet-map/data/index.html.zip)
 
-Open the file in a text editor or other tool (DO NOT USE Microsoft Word, Google Docs, or other document editing software. Use something very basic, like Notepad at the very least or an HTML development tool).
+Open the file in your favorite code / text editor. (DO NOT USE Microsoft Word, Google Docs, or other document editing software. If you don't have a text / code editor, gran one from here - http://en.wikipedia.org/wiki/Code_editor).
 
 ###Adding a Leaflet map
 
-Everything you need is there, now you will want to add a map to the page. I've broken this down into two parts, the first deals with getting your base map setup, the second details adding your CartoDB layer to the map. I am not going into adding Pop Up windows here, but can add it later if you need.
+I've broken this down into two parts, the first deals with getting your base map setup, the second details adding your CartoDB layer to the map. I am not going into adding Pop Up windows here, but can add them later if need be.
 
-###Adding a baselayer
+###Adding a base layer
 
-If you drag your index.html file to your webbrowser, it will render the page. You wont see a map yet, so lets add that. In your text editor, replace the line,
+Dragging your index.html file onto your web browser, it will render the page. You wont see a map yet, so lets add that. In your text editor, replace the line,
 
     function initialize(){}
 
 with the following
-
 
     function initialize(){
       console.log('map running');
@@ -214,17 +213,19 @@ Is where your basemap is being defined. This is a basemap we use a lot for examp
 
     http://tile.stamen.com/toner/{z}/{x}/{y}.jpg
 
+    http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg
+
     http:{s}.tiles.mapbox.com/v3/examples.map-4l7djmvo/{z}/{x}/{y}.png
 
     http:{s}.tiles.mapbox.com/v3/mapbox.world-black/{z}/{x}/{y}.png
 
-There are many more.
+As well as various others that are out there.
 
 ![basemap defined](http://i.imgur.com/03mZx.png)
 
 ###Add CartoDB layer
 
-Now, we are going to add a basic CartoDB layer. This layer is added using the CartoDB Leaflet libray, be sure to check the documentation ([available here](https://github.com/Vizzuality/cartodb-leaflet)) for more on that library. 
+Now, we are going to add a basic CartoDB layer. This layer is added using the CartoDB Leaflet library, be sure to check the documentation ([available here](https://github.com/Vizzuality/cartodb-leaflet)) for more info on the library. 
 
 Directly below the line,
 
@@ -233,7 +234,7 @@ Directly below the line,
 Add the following,
 
       user_name: "viz2"; //change this to your username
-      table_name: "usa_counties"
+      table_name: "usa_counties" //this is your table name
       var cartodb_leaflet = new L.CartoDBLayer({
         map: map,
         user_name:'viz2',
@@ -258,7 +259,7 @@ Your final map should look something like this, [final leaflet map](http://vizzu
 
 ![final leaflet map](http://i.imgur.com/nkOZW.png)
 
-That is it, now you have your basic Leaflet Map driven off of CartoDB. If you put this file in your Dropbox Public folder, or share it over email, other people will be able to open it and view what you have made.
+That's it, now you should have a basic Leaflet Map driven off of CartoDB. If you put this file in your Dropbox Public folder, or share it over email, other people will be able to open it and view what you have made.
 
 
 Tutorial given in August 2012 by @andrewxhill
